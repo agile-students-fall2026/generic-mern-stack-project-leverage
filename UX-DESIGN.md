@@ -4,7 +4,7 @@ Leverage helps renters check whether an apartment's asking rent is fair, build a
 
 ## Clickable Prototype
 
-**[Open the Figma prototype]([[https://www.figma.com/proto/QRlOL96wohPQkAEg6ZKBys/Leverage-Wireframes?node-id=7-88&p=f&t=Krco9k7EfAe4faIN-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=7%3A41&show-proto-sidebar=1](https://www.figma.com/proto/QRlOL96wohPQkAEg6ZKBys/Leverage-Wireframes?node-id=7-88&t=cxjyfqZF5ZjRjIy8-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=18%3A58&show-proto-sidebar=1&desktop-link-click-timestamp=1792997796018&desktop-ul-exp-bucket=po)](https://www.figma.com/proto/QRlOL96wohPQkAEg6ZKBys/Leverage-Wireframes?node-id=18-58&p=f&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=18%3A58&show-proto-sidebar=1))** (anyone with the link can view)
+[**Open the Figma prototype**](https://www.figma.com/proto/QRlOL96wohPQkAEg6ZKBys/Leverage-Wireframes?node-id=18-58&p=f&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=18%3A58&show-proto-sidebar=1) (anyone with the link can view)
 
 How to use it:
 - The prototype starts on **Home**. Click buttons, rows and links to move between screens.
