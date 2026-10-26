@@ -87,8 +87,7 @@ The project is in the design stage (Sprint 0). Build and test instructions will 
 
 We estimate user stories using planning poker. Each team member privately picks a card, then everyone reveals at the same time. If the estimates differ widely, the people with the highest and lowest cards explain their reasoning, and we vote again until we agree.
 
-We use a physical planning poker deck during sprint planning. Planning poker software is not allowed in this course.
-
+We use a physical planning poker deck during sprint planning.
 **Deck:** 0, 1, 2, 3, 5, 8, 13, ?
 
 | Card | Meaning |
