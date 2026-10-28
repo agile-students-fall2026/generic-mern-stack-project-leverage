@@ -66,7 +66,7 @@ We use the **feature branch workflow**.
 1. Install [git](https://git-scm.com/) and [Node.js](https://nodejs.org/) (LTS version).
 2. Clone the repository:
 ```bash
-   git clone https://github.com/agile-students-fall2026/Leverage.git
+   git clone https://github.com/agile-students-fall2026/generic-mern-stack-project-leverage.git
    cd Leverage
 ```
 3. Set your git username to **exactly** your GitHub username, so your contributions are tracked correctly:

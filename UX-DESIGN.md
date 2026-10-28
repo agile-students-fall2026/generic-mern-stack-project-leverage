@@ -13,7 +13,7 @@ How to use it:
 
 ## App Map
 
-The app map shows every screen and how users move between them. Log in and Sign Up lead to Home. From Home the user reaches Check Apartment, Connect Bank, Followed Areas, Negotiation Message, Notifications and Profile. The Landlord's Report View sits on its own because it is opened from a share link, not from inside the app.
+The app map shows every screen and how users move between them. Renters go from Log in or Sign Up to Home, which leads to Check Apartment, Connect Bank, Followed Areas, Negotiation Message, Notifications, Profile and Explore Areas. Landlords go from Sign Up or Log in to Landlord Home, then Received Reports and the Landlord's Report View, which can also be opened directly from a share link without an account.
 
 ![App Map](ux-design/App%20Map.png)
 
@@ -22,7 +22,7 @@ The app map shows every screen and how users move between them. Log in and Sign 
 ## Wireframes
 
 ### 1. Sign Up
-Where a new renter creates an account with name, email and password. A link at the bottom goes to Log in. Creating an account takes the user to Home.
+Where a new user creates an account with name, email and password. At the top they choose whether they are signing up as a **Renter** or a **Landlord**. A link at the bottom goes to Log in. Renters go to Home after signing up; landlords go to Landlord Home.
 
 ![Sign Up](ux-design/signup.png)
 
@@ -32,12 +32,12 @@ Where a returning renter logs in with email and password. A link at the bottom g
 ![Log in](ux-design/login.png)
 
 ### 3. Home
-The main screen after login. It has a "Check an apartment" button, shortcuts to the Reliability Report and Followed areas, and a short list of recent saved items. The **Menu** button in the top bar opens the menu popup.
+The renter's main screen after login. A large "Check an apartment" button sits at the top, with shortcuts underneath to the Reliability Report, Followed areas, Negotiate and Explore Areas. The **Menu** button in the top bar opens the menu popup.
 
 ![Home](ux-design/Home.png)
 
 ### 4. Menu Popup
-Opens on top of the current screen when the user taps **Menu**. It links to every main section: Home, Check an apartment, Reliability Report, Followed areas, Negotiate, Notifications, Profile and Log out. Tapping **Menu** again closes it.
+Opens on top of the current screen when the renter taps **Menu**. It links to every main section: Home, Check Apartment, Reliability Report, Followed Areas, Negotiate, Notifications, Profile, Active Links, Explore Areas and Log Out. Tapping **Menu** again closes it.
 
 ![Menu Popup](ux-design/menu_popup.png)
 
@@ -81,42 +81,67 @@ Lists every share link the renter has created, with its creation date and a swit
 
 ![Active Share Links](ux-design/Active%20Share%20Links.png)
 
-### 13. Landlord's Report View
-What a landlord sees after opening a share link. No account is needed. It shows the renter's first name, only the report sections the renter chose to share, and a "Verified by Leverage" badge with the date. This is the start of the second prototype flow.
-
-![Landlord's Report View](ux-design/Landlord%E2%80%99s%20Report%20View.png)
-
-### 14. Rent trends
+### 13. Rent trends
 Shows how average rent in an area has changed over recent years in a chart, with a "Follow this area" button that adds the area to the renter's followed areas.
 
 ![Rent trends](ux-design/Rent%20trends.png)
+
+### 14. Rent trends - following
+The same Rent trends screen after the renter taps "Follow this area". The button changes to **Following** to show the area is now in their followed areas.
+
+![Rent trends - following](ux-design/Rent%20trends%20-%20following.png)
 
 ### 15. Followed areas
 A list of the areas the renter follows, each with its recent rent change and an "Unfollow" option. Tapping an area opens its rent trends.
 
 ![Followed areas](ux-design/Followed%20areas.png)
 
-### 16. Negotiation message
+### 16. Explore areas
+Lets the renter search for any area or address, and shows popular areas with their rent change over the past year and average rent. Tapping an area opens its rent trends.
+
+![Explore areas](ux-design/Explore%20areas.png)
+
+### 17. Negotiation message
 Shows a summary of comparable rents and a generated negotiation message in an editable text box. "Copy message" copies it and shows the confirmation version. A link lets the renter record what happened afterward.
 
 ![Negotiation message](ux-design/Negotiation%20message.png)
 
-### 17. Negotiation message - copied
+### 18. Negotiation message - copied
 The same screen after the message is copied, with a "Message copied" confirmation. "Record what happened" opens the Record outcome screen.
 
 ![Negotiation message - copied](ux-design/Negotiation%20message%20-%20copied.png)
 
-### 18. Record outcome
+### 19. Record outcome
 The renter picks an outcome (rent lowered, increase accepted, application accepted, other), adds a short note, and saves. Saving returns to Home.
 
 ![Record outcome](ux-design/Record%20outcome.png)
 
-### 19. Profile
+### 20. Profile
 Editable name, email and city fields with a "Save" button. Saving returns to Home.
 
 ![Profile](ux-design/profile.png)
 
-### 20. Notifications
+### 21. Notifications
 All notifications in one list, newest first. Unread ones look different from read ones. Tapping a notification opens the related screen, such as rent trends for a followed area or the negotiation screen.
 
 ![Notifications](ux-design/notifications.png)
+
+### 22. Landlord Home
+The landlord's main screen after logging in. It has a "Received reports" button and a short list of the most recent reports renters have shared.
+
+![Landlord Home](ux-design/Landlord%20Home.png)
+
+### 23. Landlord Menu
+Opens when a landlord taps **Menu**. It links to Home, Received reports and Log Out.
+
+![Landlord Menu](ux-design/Landlord%20Menu.png)
+
+### 24. Received reports
+Every Reliability Report renters have shared with the landlord, split into new and earlier, each with the renter's name, the date and a View button that opens the report.
+
+![Received reports](ux-design/Received%20reports.png)
+
+### 25. Landlord's Report View
+A renter's Reliability Report as the landlord sees it, opened from Received reports or directly from a share link without an account. It shows the renter's first name, only the sections the renter chose to share, and a "Verified by Leverage" badge with the date.
+
+![Landlord's Report View](ux-design/Landlord%E2%80%99s%20Report%20View.png)
