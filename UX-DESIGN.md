@@ -9,7 +9,7 @@ Leverage helps renters check whether an apartment's asking rent is fair, build a
 How to use it:
 - The prototype starts on **Home**. Click buttons, rows and links to move between screens.
 - The **Menu** button in the top bar opens the menu popup on every screen. Click **Menu** again to close it.
-- There are **two flows**: the main renter flow (starts at Home) and the **Landlord** flow (starts at Landlord's Report View, the screen a landlord sees after opening a share link, with no account).
+- There are **separate flows** for renters (start at Sign Up or Home) and landlords (start at Landlord Home, or at Landlord's Report View when opened from a share link without an account).
 
 ## App Map
 
