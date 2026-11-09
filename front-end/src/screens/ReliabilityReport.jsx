@@ -13,10 +13,22 @@ import { formatDate } from '../data/format.js'
 // Build the shareable sections from the report data.
 function buildSections(report) {
   return [
-    { id: 'months', label: 'Verified rent payments', value: `${report.monthsVerified} months` },
-    { id: 'onTime', label: 'Paid on time', value: `${report.onTimePayments} of ${report.totalPayments}` },
+    {
+      id: 'months',
+      label: 'Verified rent payments',
+      value: `${report.monthsVerified} months`,
+    },
+    {
+      id: 'onTime',
+      label: 'Paid on time',
+      value: `${report.onTimePayments} of ${report.totalPayments}`,
+    },
     { id: 'income', label: 'Income stability', value: report.incomeStability },
-    { id: 'rentToIncome', label: 'Rent compared to income', value: `${report.rentToIncomePercent}%` },
+    {
+      id: 'rentToIncome',
+      label: 'Rent compared to income',
+      value: `${report.rentToIncomePercent}%`,
+    },
   ]
 }
 
@@ -43,13 +55,15 @@ export default function ReliabilityReport() {
   }
 
   const sections = buildSections(report)
-  const shownSections = sections.filter((section) => !hiddenSections.includes(section.id))
+  const shownSections = sections.filter(
+    section => !hiddenSections.includes(section.id),
+  )
 
   // Update the preview when a switch changes.
   const setSectionShown = (sectionId, shown) => {
     setHiddenSections(
       shown
-        ? hiddenSections.filter((id) => id !== sectionId)
+        ? hiddenSections.filter(id => id !== sectionId)
         : [...hiddenSections, sectionId],
     )
   }
@@ -81,8 +95,11 @@ export default function ReliabilityReport() {
           </p>
         ) : (
           <dl className="divide-y divide-line">
-            {shownSections.map((section) => (
-              <div key={section.id} className="flex items-center justify-between py-3">
+            {shownSections.map(section => (
+              <div
+                key={section.id}
+                className="flex items-center justify-between py-3"
+              >
                 <dt className="text-sm text-muted">{section.label}</dt>
                 <dd className="font-semibold">{section.value}</dd>
               </div>
@@ -95,17 +112,22 @@ export default function ReliabilityReport() {
       <div className="mt-8">
         <SectionTitle>Choose what to share</SectionTitle>
         <ul className="divide-y divide-line border-y border-line">
-          {sections.map((section) => {
+          {sections.map(section => {
             const shown = !hiddenSections.includes(section.id)
 
             return (
-              <li key={section.id} className="flex items-center justify-between py-3">
-                <span className={`text-sm ${shown ? 'text-ink' : 'text-muted'}`}>
+              <li
+                key={section.id}
+                className="flex items-center justify-between py-3"
+              >
+                <span
+                  className={`text-sm ${shown ? 'text-ink' : 'text-muted'}`}
+                >
                   {section.label}
                 </span>
                 <Toggle
                   checked={shown}
-                  onChange={(value) => setSectionShown(section.id, value)}
+                  onChange={value => setSectionShown(section.id, value)}
                   label={`Share ${section.label}`}
                 />
               </li>
@@ -116,7 +138,10 @@ export default function ReliabilityReport() {
 
       {/* Keep sharing disabled when every section is hidden. */}
       <div className="mt-6 space-y-3">
-        <Button onClick={() => setSharing(true)} disabled={shownSections.length === 0}>
+        <Button
+          onClick={() => setSharing(true)}
+          disabled={shownSections.length === 0}
+        >
           Share report
         </Button>
         <Button to="/share-links" variant="ghost">

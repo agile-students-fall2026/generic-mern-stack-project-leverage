@@ -13,9 +13,9 @@ export default function FollowedAreas() {
     getMyFollowedAreas().then(setAreas)
   }, [])
 
-  const unfollow = async (areaId) => {
+  const unfollow = async areaId => {
     await setFollowingArea(areaId, false)
-    setAreas(areas.filter((area) => area.id !== areaId))
+    setAreas(areas.filter(area => area.id !== areaId))
   }
 
   if (!areas) {
@@ -26,22 +26,34 @@ export default function FollowedAreas() {
     <div>
       <ScreenTitle
         title="Followed areas"
-        subtitle={areas.length > 0 ? 'Rent changes in the areas you follow.' : "You're not following any areas yet."}
+        subtitle={
+          areas.length > 0
+            ? 'Rent changes in the areas you follow.'
+            : "You're not following any areas yet."
+        }
       />
 
       {areas.length === 0 ? (
         <Button to="/explore">Explore areas</Button>
       ) : (
         <ul className="space-y-3">
-          {areas.map((area) => (
-            <li key={area.id} className="flex items-stretch border border-line bg-surface">
-              <Link to={`/areas/${area.id}`} className="flex flex-1 items-center justify-between gap-3 p-4 transition hover:bg-canvas">
+          {areas.map(area => (
+            <li
+              key={area.id}
+              className="flex items-stretch border border-line bg-surface"
+            >
+              <Link
+                to={`/areas/${area.id}`}
+                className="flex flex-1 items-center justify-between gap-3 p-4 transition hover:bg-canvas"
+              >
                 <div>
                   <p className="font-semibold">{area.name}</p>
                   <p className="text-sm text-muted">{area.borough}</p>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold">{formatRent(area.averageRent)}/mo</p>
+                  <p className="font-semibold">
+                    {formatRent(area.averageRent)}/mo
+                  </p>
                   <p className="text-xs text-muted">
                     <PercentChange value={area.changePastYear} /> past year
                   </p>

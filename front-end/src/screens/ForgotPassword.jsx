@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { Link } from "react-router";
-import Button from "../components/ui/Button.jsx";
-import ScreenTitle from "../components/ui/ScreenTitle.jsx";
-import TextField from "../components/ui/TextField.jsx";
+import { useState } from 'react'
+import { Link } from 'react-router'
+import Button from '../components/ui/Button.jsx'
+import ScreenTitle from '../components/ui/ScreenTitle.jsx'
+import TextField from '../components/ui/TextField.jsx'
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
+  const [email, setEmail] = useState('')
+  const [sent, setSent] = useState(false)
 
   // Sprint 1 only shows the confirmation. The back-end will send the real email.
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setSent(true);
-  };
+  const handleSubmit = event => {
+    event.preventDefault()
+    setSent(true)
+  }
 
   if (sent) {
     return (
@@ -30,7 +30,7 @@ export default function ForgotPassword() {
           </Button>
         </div>
         <p className="mt-6 text-center text-sm text-muted">
-          Didn&apos;t get it?{" "}
+          Didn&apos;t get it?{' '}
           <button
             type="button"
             onClick={() => setSent(false)}
@@ -40,7 +40,7 @@ export default function ForgotPassword() {
           </button>
         </p>
       </div>
-    );
+    )
   }
 
   return (
@@ -57,7 +57,7 @@ export default function ForgotPassword() {
           name="email"
           type="email"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={event => setEmail(event.target.value)}
           autoComplete="email"
           required
         />
@@ -66,11 +66,11 @@ export default function ForgotPassword() {
         </div>
       </form>
       <p className="mt-6 text-center text-sm text-muted">
-        Remembered it?{" "}
+        Remembered it?{' '}
         <Link to="/login" className="font-semibold text-accent hover:underline">
           Log in
         </Link>
       </p>
     </div>
-  );
+  )
 }

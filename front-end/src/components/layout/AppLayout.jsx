@@ -1,63 +1,63 @@
-import { useCallback, useEffect, useState } from "react";
-import { Link, NavLink, Outlet } from "react-router";
+import { useCallback, useEffect, useState } from 'react'
+import { Link, NavLink, Outlet } from 'react-router'
 
 const menuItems = {
   renter: [
-    { label: "Home", to: "/" },
-    { label: "Check an apartment", to: "/check" },
-    { label: "Reliability Report", to: "/report" },
-    { label: "Followed areas", to: "/followed-areas" },
-    { label: "Negotiate", to: "/negotiate" },
-    { label: "Notifications", to: "/notifications" },
-    { label: "Profile", to: "/profile" },
-    { label: "Active share links", to: "/share-links" },
-    { label: "Explore areas", to: "/explore" },
+    { label: 'Home', to: '/' },
+    { label: 'Check an apartment', to: '/check' },
+    { label: 'Reliability Report', to: '/report' },
+    { label: 'Followed areas', to: '/followed-areas' },
+    { label: 'Negotiate', to: '/negotiate' },
+    { label: 'Notifications', to: '/notifications' },
+    { label: 'Profile', to: '/profile' },
+    { label: 'Active share links', to: '/share-links' },
+    { label: 'Explore areas', to: '/explore' },
   ],
   landlord: [
-    { label: "Home", to: "/landlord" },
-    { label: "Received reports", to: "/landlord/reports" },
+    { label: 'Home', to: '/landlord' },
+    { label: 'Received reports', to: '/landlord/reports' },
   ],
-};
+}
 
-const homePaths = { renter: "/", landlord: "/landlord" };
+const homePaths = { renter: '/', landlord: '/landlord' }
 
 function BarRow({ homePath, buttonLabel, onButtonClick, dark }) {
   return (
     <div className="flex h-14 items-center justify-between px-5">
       <Link
         to={homePath}
-        className={`text-lg font-bold tracking-tight ${dark ? "text-white" : "text-ink"}`}
+        className={`text-lg font-bold tracking-tight ${dark ? 'text-white' : 'text-ink'}`}
       >
         Leverage
       </Link>
       <button
         type="button"
         onClick={onButtonClick}
-        className={`border px-3 py-1.5 text-sm font-semibold ${dark ? "border-white text-white" : "border-ink text-ink"}`}
+        className={`border px-3 py-1.5 text-sm font-semibold ${dark ? 'border-white text-white' : 'border-ink text-ink'}`}
       >
         {buttonLabel}
       </button>
     </div>
-  );
+  )
 }
 
 export default function AppLayout({ role }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const [menuOpen, setMenuOpen] = useState(false)
+  const closeMenu = useCallback(() => setMenuOpen(false), [])
 
-    // Let Escape close the menu while it is open.
+  // Let Escape close the menu while it is open.
   useEffect(() => {
-    if (!menuOpen) return;
+    if (!menuOpen) return
 
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        closeMenu();
+    const handleKeyDown = event => {
+      if (event.key === 'Escape') {
+        closeMenu()
       }
-    };
+    }
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [menuOpen, closeMenu]);
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [menuOpen, closeMenu])
 
   return (
     <>
@@ -83,14 +83,14 @@ export default function AppLayout({ role }) {
           />
           <nav className="flex-1 overflow-y-auto px-5 pb-8">
             <ul className="divide-y divide-white/15 border-y border-white/15">
-              {menuItems[role].map((item) => (
+              {menuItems[role].map(item => (
                 <li key={item.to}>
                   <NavLink
                     to={item.to}
                     end
                     onClick={closeMenu}
                     className={({ isActive }) =>
-                      `block py-4 text-lg ${isActive ? "font-semibold text-white" : "text-white/75 hover:text-white"}`
+                      `block py-4 text-lg ${isActive ? 'font-semibold text-white' : 'text-white/75 hover:text-white'}`
                     }
                   >
                     {item.label}
@@ -115,5 +115,5 @@ export default function AppLayout({ role }) {
         <Outlet />
       </main>
     </>
-  );
+  )
 }

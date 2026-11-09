@@ -49,7 +49,7 @@ export default function ConnectBank() {
         <Card>
           <SectionTitle>What we check</SectionTitle>
           <ul className="space-y-2">
-            {weCheck.map((item) => (
+            {weCheck.map(item => (
               <li key={item} className="flex gap-2 text-sm">
                 <span className="font-semibold text-positive">✓</span>
                 {item}
@@ -61,7 +61,7 @@ export default function ConnectBank() {
         <Card>
           <SectionTitle>What landlords never see</SectionTitle>
           <ul className="space-y-2">
-            {weNeverShare.map((item) => (
+            {weNeverShare.map(item => (
               <li key={item} className="flex gap-2 text-sm">
                 <span className="font-semibold text-negative">✕</span>
                 {item}
@@ -76,10 +76,11 @@ export default function ConnectBank() {
           Why connect my bank?
         </summary>
         <p className="mt-2 text-sm text-muted">
-          We use rent payment history and income patterns to prepare your Reliability Report.
+          We use rent payment history and income patterns to prepare your
+          Reliability Report.
         </p>
       </details>
-        
+
       <Button onClick={handleConnect} disabled={isConnecting}>
         {isConnecting ? 'Connecting…' : 'Connect bank account'}
       </Button>

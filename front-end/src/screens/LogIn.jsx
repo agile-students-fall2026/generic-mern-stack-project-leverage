@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router";
-import Button from "../components/ui/Button.jsx";
-import ScreenTitle from "../components/ui/ScreenTitle.jsx";
-import TextField from "../components/ui/TextField.jsx";
-import RoleChoice from "../components/RoleChoice.jsx";
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router'
+import Button from '../components/ui/Button.jsx'
+import ScreenTitle from '../components/ui/ScreenTitle.jsx'
+import TextField from '../components/ui/TextField.jsx'
+import RoleChoice from '../components/RoleChoice.jsx'
 
 export default function LogIn() {
-  const navigate = useNavigate();
-  const [role, setRole] = useState("renter");
-  const [form, setForm] = useState({ email: "", password: "" });
+  const navigate = useNavigate()
+  const [role, setRole] = useState('renter')
+  const [form, setForm] = useState({ email: '', password: '' })
 
-  const updateField = (event) =>
-    setForm({ ...form, [event.target.name]: event.target.value });
+  const updateField = event =>
+    setForm({ ...form, [event.target.name]: event.target.value })
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    navigate(role === "landlord" ? "/landlord" : "/");
-  };
+  const handleSubmit = event => {
+    event.preventDefault()
+    navigate(role === 'landlord' ? '/landlord' : '/')
+  }
 
   return (
     <div className="px-5 py-10">
@@ -50,7 +50,8 @@ export default function LogIn() {
         <div className="text-right">
           <Link
             to="/forgot-password"
-            className="text-sm font-semibold text-accent hover:underline">
+            className="text-sm font-semibold text-accent hover:underline"
+          >
             Forgot password?
           </Link>
         </div>
@@ -59,7 +60,7 @@ export default function LogIn() {
         </div>
       </form>
       <p className="mt-6 text-center text-sm text-muted">
-        New to Leverage?{" "}
+        New to Leverage?{' '}
         <Link
           to="/signup"
           className="font-semibold text-accent hover:underline"
@@ -68,5 +69,5 @@ export default function LogIn() {
         </Link>
       </p>
     </div>
-  );
+  )
 }

@@ -26,7 +26,7 @@ import SignUp from './screens/SignUp.jsx'
 
 export default function App() {
   return (
-      <div className="mx-auto min-h-screen max-w-md bg-canvas">
+    <div className="mx-auto min-h-screen max-w-md bg-canvas">
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
@@ -47,7 +47,10 @@ export default function App() {
           <Route path="explore" element={<ExploreAreas />} />
           <Route path="negotiate" element={<ChooseApartment />} />
           <Route path="negotiate/:checkId" element={<NegotiationMessage />} />
-          <Route path="negotiate/:checkId/outcome" element={<RecordOutcome />} />
+          <Route
+            path="negotiate/:checkId/outcome"
+            element={<RecordOutcome />}
+          />
           <Route path="notifications" element={<Notifications />} />
           <Route path="profile" element={<Profile />} />
         </Route>

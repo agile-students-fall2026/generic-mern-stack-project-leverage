@@ -1,26 +1,26 @@
-import { useState } from "react";
-import Button from "../components/ui/Button.jsx";
-import ScreenTitle from "../components/ui/ScreenTitle.jsx";
-import TextField from "../components/ui/TextField.jsx";
+import { useState } from 'react'
+import Button from '../components/ui/Button.jsx'
+import ScreenTitle from '../components/ui/ScreenTitle.jsx'
+import TextField from '../components/ui/TextField.jsx'
 
-const MIN_PASSWORD_LENGTH = 8;
+const MIN_PASSWORD_LENGTH = 8
 
 export default function ResetPassword() {
-  const [form, setForm] = useState({ password: "", confirm: "" });
-  const [updated, setUpdated] = useState(false);
+  const [form, setForm] = useState({ password: '', confirm: '' })
+  const [updated, setUpdated] = useState(false)
 
-  const updateField = (event) =>
-    setForm({ ...form, [event.target.name]: event.target.value });
+  const updateField = event =>
+    setForm({ ...form, [event.target.name]: event.target.value })
 
-  const longEnough = form.password.length >= MIN_PASSWORD_LENGTH;
-  const matches = form.password === form.confirm;
-  const showMismatch = form.confirm !== "" && !matches;
+  const longEnough = form.password.length >= MIN_PASSWORD_LENGTH
+  const matches = form.password === form.confirm
+  const showMismatch = form.confirm !== '' && !matches
 
   // Sprint 1 only shows the confirmation. The back-end will save the new password.
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setUpdated(true);
-  };
+  const handleSubmit = event => {
+    event.preventDefault()
+    setUpdated(true)
+  }
 
   if (updated) {
     return (
@@ -32,7 +32,7 @@ export default function ResetPassword() {
         />
         <Button to="/login">Log in</Button>
       </div>
-    );
+    )
   }
 
   return (
@@ -76,5 +76,5 @@ export default function ResetPassword() {
         </div>
       </form>
     </div>
-  );
+  )
 }

@@ -50,20 +50,26 @@ export default function SharePopup({ onClose }) {
       aria-label="Share your report"
     >
       <div className="absolute inset-x-0 bottom-0 z-50 mx-auto w-full max-w-md border-t border-line bg-white px-5 pt-6 pb-8 text-ink shadow-xl">
-        <h2 className="text-xl font-semibold tracking-tight">Share your report</h2>
+        <h2 className="text-xl font-semibold tracking-tight">
+          Share your report
+        </h2>
         <p className="mt-1 text-sm text-muted">
-          Anyone with this private link can see the sections you chose. You can turn it off any time.
+          Anyone with this private link can see the sections you chose. You can
+          turn it off any time.
         </p>
 
         {/* Name the link before copying it. */}
-        <label htmlFor="share-link-name" className="mt-5 block text-sm font-semibold">
+        <label
+          htmlFor="share-link-name"
+          className="mt-5 block text-sm font-semibold"
+        >
           Name this link
         </label>
         <input
           id="share-link-name"
           type="text"
           value={linkName}
-          onChange={(event) => setLinkName(event.target.value)}
+          onChange={event => setLinkName(event.target.value)}
           placeholder="For example, Astoria application"
           className="mt-1 w-full border border-line bg-surface px-3 py-3 text-sm text-ink"
         />

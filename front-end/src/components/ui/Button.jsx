@@ -6,7 +6,14 @@ const VARIANTS = {
   ghost: 'text-accent hover:underline underline-offset-4',
 }
 
-export default function Button({ children, to, onClick, variant = 'primary', type = 'button', disabled = false }) {
+export default function Button({
+  children,
+  to,
+  onClick,
+  variant = 'primary',
+  type = 'button',
+  disabled = false,
+}) {
   const className = `block w-full px-4 py-3 text-center text-sm font-semibold transition ${VARIANTS[variant]} ${
     disabled ? 'pointer-events-none opacity-40' : ''
   }`
@@ -20,7 +27,12 @@ export default function Button({ children, to, onClick, variant = 'primary', typ
   }
 
   return (
-    <button type={type} onClick={onClick} disabled={disabled} className={className}>
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={className}
+    >
       {children}
     </button>
   )
