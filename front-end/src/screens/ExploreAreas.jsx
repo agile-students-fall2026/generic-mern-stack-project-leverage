@@ -6,8 +6,6 @@ import SectionTitle from '../components/ui/SectionTitle.jsx'
 import { getAreas } from '../data/api.js'
 import { formatRent } from '../data/format.js'
 
-const POPULAR_AREA_IDS = ['upper-west-side', 'astoria', 'williamsburg']
-
 // Matches a typed area name, borough or ZIP code, and also a full address that mentions
 // the area or one of its ZIP codes, e.g. "31-18 30th Ave, Astoria" or "88 Wilson Ave, NY 11237".
 function matchesSearch(area, search) {
@@ -31,9 +29,7 @@ export default function ExploreAreas() {
   }, [])
 
   const search = query.trim().toLowerCase()
-  const popularAreas = POPULAR_AREA_IDS.map(id =>
-    areas.find(area => area.id === id),
-  ).filter(Boolean)
+  const popularAreas = areas.filter(area => area.popular)
   const shownAreas = search
     ? areas.filter(area => matchesSearch(area, search))
     : popularAreas
