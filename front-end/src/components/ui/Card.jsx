@@ -13,7 +13,11 @@ export default function Card({ children, to, onClick }) {
 
   if (onClick) {
     return (
-      <button type="button" onClick={onClick} className={`${BASE} transition hover:border-ink`}>
+      <button
+        type="button"
+        onClick={onClick}
+        className={`${BASE} transition hover:border-ink`}
+      >
         {children}
       </button>
     )

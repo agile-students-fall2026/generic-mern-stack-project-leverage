@@ -18,17 +18,20 @@ export function getAreas() {
 
 export async function getArea(areaId) {
   const areas = await getAreas()
-  return areas.find((area) => area.id === areaId)
+  return areas.find(area => area.id === areaId)
 }
 
 export async function getRentTrend(areaId) {
   const trends = await load('rent-trends.json')
-  return trends.find((trend) => trend.areaId === areaId)
+  return trends.find(trend => trend.areaId === areaId)
 }
 
 export async function getFollowedAreas() {
-  const [followedIds, areas] = await Promise.all([load('followed-areas.json'), getAreas()])
-  return areas.filter((area) => followedIds.includes(area.id))
+  const [followedIds, areas] = await Promise.all([
+    load('followed-areas.json'),
+    getAreas(),
+  ])
+  return areas.filter(area => followedIds.includes(area.id))
 }
 
 export async function getApartmentChecks() {
@@ -38,7 +41,7 @@ export async function getApartmentChecks() {
 
 export async function getApartmentCheck(checkId) {
   const checks = await getApartmentChecks()
-  return checks.find((check) => check.id === checkId)
+  return checks.find(check => check.id === checkId)
 }
 
 export async function getLatestApartmentCheck() {
@@ -48,7 +51,7 @@ export async function getLatestApartmentCheck() {
 
 export async function getComparables(checkId) {
   const comparables = await load('comparables.json')
-  return comparables.filter((comparable) => comparable.checkId === checkId)
+  return comparables.filter(comparable => comparable.checkId === checkId)
 }
 
 export function getReport() {
@@ -74,7 +77,7 @@ export function saveShareLinks(links) {
 export async function addShareLink(newLink) {
   const links = await getShareLinks()
 
-  if (links.some((link) => link.id === newLink.id)) {
+  if (links.some(link => link.id === newLink.id)) {
     return links
   }
 
@@ -85,7 +88,9 @@ export async function addShareLink(newLink) {
 
 export async function getNotifications() {
   const notifications = await load('notifications.json')
-  return [...notifications].sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  return [...notifications].sort((a, b) =>
+    b.createdAt.localeCompare(a.createdAt),
+  )
 }
 
 export function getProfile() {
@@ -99,5 +104,5 @@ export async function getReceivedReports() {
 
 export async function getSharedReport(reportId) {
   const reports = await load('shared-reports.json')
-  return reports.find((report) => report.id === reportId)
+  return reports.find(report => report.id === reportId)
 }

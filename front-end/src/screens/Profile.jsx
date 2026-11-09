@@ -1,30 +1,30 @@
-import { useEffect, useState } from "react";
-import Button from "../components/ui/Button.jsx";
-import ScreenTitle from "../components/ui/ScreenTitle.jsx";
-import TextField from "../components/ui/TextField.jsx";
-import { getMyProfile, saveMyProfile } from "../data/profile.js";
+import { useEffect, useState } from 'react'
+import Button from '../components/ui/Button.jsx'
+import ScreenTitle from '../components/ui/ScreenTitle.jsx'
+import TextField from '../components/ui/TextField.jsx'
+import { getMyProfile, saveMyProfile } from '../data/profile.js'
 
 export default function Profile() {
-  const [form, setForm] = useState(null);
-  const [saved, setSaved] = useState(false);
+  const [form, setForm] = useState(null)
+  const [saved, setSaved] = useState(false)
 
   useEffect(() => {
-    getMyProfile().then(setForm);
-  }, []);
+    getMyProfile().then(setForm)
+  }, [])
 
-  const updateField = (event) => {
-    setForm({ ...form, [event.target.name]: event.target.value });
-    setSaved(false);
-  };
+  const updateField = event => {
+    setForm({ ...form, [event.target.name]: event.target.value })
+    setSaved(false)
+  }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    saveMyProfile(form);
-    setSaved(true);
-  };
+  const handleSubmit = event => {
+    event.preventDefault()
+    saveMyProfile(form)
+    setSaved(true)
+  }
 
   if (!form) {
-    return <p className="text-sm text-muted">Loading…</p>;
+    return <p className="text-sm text-muted">Loading…</p>
   }
 
   return (
@@ -57,7 +57,7 @@ export default function Profile() {
           onChange={updateField}
         />
         <div className="pt-2">
-          <Button type="submit">{saved ? "Saved" : "Save changes"}</Button>
+          <Button type="submit">{saved ? 'Saved' : 'Save changes'}</Button>
         </div>
         {saved && (
           <p
@@ -69,5 +69,5 @@ export default function Profile() {
         )}
       </form>
     </div>
-  );
+  )
 }

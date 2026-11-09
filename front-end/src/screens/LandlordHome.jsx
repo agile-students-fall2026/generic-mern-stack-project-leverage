@@ -15,22 +15,27 @@ export default function LandlordHome() {
     getReceivedReports().then(setReports)
   }, [])
 
-  const newCount = reports.filter((report) => report.isNew).length
+  const newCount = reports.filter(report => report.isNew).length
 
   return (
     <div>
-      <ScreenTitle title="Welcome back" subtitle={`${newCount} new ${newCount === 1 ? 'report' : 'reports'} from renters`} />
+      <ScreenTitle
+        title="Welcome back"
+        subtitle={`${newCount} new ${newCount === 1 ? 'report' : 'reports'} from renters`}
+      />
       <div className="mb-8">
         <Button to="/landlord/reports">Received reports</Button>
       </div>
       <SectionTitle>Recently shared with you</SectionTitle>
       <ul className="space-y-3">
-        {reports.slice(0, RECENT_COUNT).map((report) => (
+        {reports.slice(0, RECENT_COUNT).map(report => (
           <li key={report.id}>
             <Card to={`/landlord/reports/${report.id}`}>
               <div className="flex items-center justify-between">
                 <p className="font-semibold">{report.renterName}</p>
-                <p className="text-sm text-muted">{formatDate(report.sharedOn)}</p>
+                <p className="text-sm text-muted">
+                  {formatDate(report.sharedOn)}
+                </p>
               </div>
             </Card>
           </li>
