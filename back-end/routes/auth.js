@@ -69,4 +69,33 @@ router.post('/logout', (req, res) => {
   res.json({ status: 'Logged out' })
 })
 
+router.post('/forgot-password', (req, res) => {
+  const { email } = req.body
+
+  if (!email) {
+    return res.status(400).json({ error: 'Please enter your email.' })
+  }
+
+  // same reply whether or not the email has an account
+  res.json({
+    status: 'If an account exists for this email, a reset link has been sent.',
+  })
+})
+
+router.post('/reset-password', (req, res) => {
+  const { password, confirm } = req.body
+
+  if (!password || password.length < 8) {
+    return res
+      .status(400)
+      .json({ error: 'Your password must be at least 8 characters.' })
+  }
+
+  if (password !== confirm) {
+    return res.status(400).json({ error: 'The passwords do not match.' })
+  }
+
+  res.json({ status: 'Your password has been updated.' })
+})
+
 export default router
