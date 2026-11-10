@@ -48,4 +48,25 @@ router.post('/signup', (req, res) => {
   res.status(201).json({ id: newUser.id, name, email, role })
 })
 
+router.post('/login', (req, res) => {
+  const { email, password } = req.body
+
+  // find the user with this email (ignore capital letters)
+  const user = users.find(
+    u => u.email.toLowerCase() === (email || '').toLowerCase(),
+  )
+
+  // no such user, or wrong password
+  if (!user || user.password !== password) {
+    return res.status(401).json({ error: 'Incorrect email or password.' })
+  }
+
+  // send the user back without the password
+  res.json({ id: user.id, name: user.name, email: user.email, role: user.role })
+})
+
+router.post('/logout', (req, res) => {
+  res.json({ status: 'Logged out' })
+})
+
 export default router
