@@ -1,0 +1,17 @@
+import express from 'express'
+import morgan from 'morgan'
+import cors from 'cors'
+
+const app = express()
+
+// log requests, but not during tests
+app.use(morgan('dev', { skip: (req, res) => process.env.NODE_ENV === 'test' }))
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.get('/', (req, res) => {
+  res.send('Leverage back-end is running')
+})
+
+export default app
