@@ -4,18 +4,27 @@ import Button from '../components/ui/Button.jsx'
 import ScreenTitle from '../components/ui/ScreenTitle.jsx'
 import TextField from '../components/ui/TextField.jsx'
 import RoleChoice from '../components/RoleChoice.jsx'
+import { signUp } from '../data/api.js'
 
 export default function SignUp() {
   const navigate = useNavigate()
   const [role, setRole] = useState('renter')
   const [form, setForm] = useState({ name: '', email: '', password: '' })
+  const [error, setError] = useState('')
 
   const updateField = event =>
     setForm({ ...form, [event.target.name]: event.target.value })
 
-  const handleSubmit = event => {
+    const handleSubmit = async event => {
     event.preventDefault()
-    navigate(role === 'landlord' ? '/landlord' : '/')
+    setError('')
+
+    try {
+      const user = await signUp({ ...form, role })
+      navigate(user.role === 'landlord' ? '/landlord' : '/')
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   return (
@@ -57,6 +66,11 @@ export default function SignUp() {
           required
           minLength={8}
         />
+        {error && (
+          <p className="text-sm text-negative" role="alert">
+            {error}
+          </p>
+        )}
         <div className="pt-2">
           <Button type="submit">Create account</Button>
         </div>

@@ -127,3 +127,7 @@ export async function getSharedReport(reportId) {
   const reports = await load('shared-reports.json')
   return reports.find(report => report.id === reportId)
 }
+
+export function signUp(account) {
+  return request('/auth/signup', { method: 'POST', body: account })
+}
