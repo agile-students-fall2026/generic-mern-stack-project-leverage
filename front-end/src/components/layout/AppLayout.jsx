@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link, NavLink, Outlet } from 'react-router'
+import { logOut } from '../../data/api.js'
 
 const menuItems = {
   renter: [
@@ -100,7 +101,10 @@ export default function AppLayout({ role }) {
               <li>
                 <Link
                   to="/login"
-                  onClick={closeMenu}
+                  onClick={() => {
+                    closeMenu()
+                    logOut().catch(() => {})
+                  }}
                   className="block py-4 text-lg text-white/75 hover:text-white"
                 >
                   Log out

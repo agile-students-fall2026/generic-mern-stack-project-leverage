@@ -131,3 +131,11 @@ export async function getSharedReport(reportId) {
 export function signUp(account) {
   return request('/auth/signup', { method: 'POST', body: account })
 }
+
+export function logIn(credentials) {
+  return request('/auth/login', { method: 'POST', body: credentials })
+}
+
+export function logOut() {
+  return request('/auth/logout', { method: 'POST' })
+}
