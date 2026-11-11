@@ -2,12 +2,14 @@ import { useState } from 'react'
 import Button from '../components/ui/Button.jsx'
 import ScreenTitle from '../components/ui/ScreenTitle.jsx'
 import TextField from '../components/ui/TextField.jsx'
+import { resetPassword } from '../data/api.js'
 
 const MIN_PASSWORD_LENGTH = 8
 
 export default function ResetPassword() {
   const [form, setForm] = useState({ password: '', confirm: '' })
   const [updated, setUpdated] = useState(false)
+  const [error, setError] = useState('')
 
   const updateField = event =>
     setForm({ ...form, [event.target.name]: event.target.value })
@@ -16,10 +18,16 @@ export default function ResetPassword() {
   const matches = form.password === form.confirm
   const showMismatch = form.confirm !== '' && !matches
 
-  // Sprint 1 only shows the confirmation. The back-end will save the new password.
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault()
-    setUpdated(true)
+    setError('')
+
+    try {
+      await resetPassword(form)
+      setUpdated(true)
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   if (updated) {
@@ -67,6 +75,11 @@ export default function ResetPassword() {
         {showMismatch && (
           <p className="text-sm text-negative" role="alert">
             Passwords don&apos;t match.
+          </p>
+        )}
+        {error && (
+          <p className="text-sm text-negative" role="alert">
+            {error}
           </p>
         )}
         <div className="pt-2">

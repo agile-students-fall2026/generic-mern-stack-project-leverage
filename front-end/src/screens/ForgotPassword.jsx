@@ -3,15 +3,23 @@ import { Link } from 'react-router'
 import Button from '../components/ui/Button.jsx'
 import ScreenTitle from '../components/ui/ScreenTitle.jsx'
 import TextField from '../components/ui/TextField.jsx'
+import { forgotPassword } from '../data/api.js'
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('')
   const [sent, setSent] = useState(false)
+  const [error, setError] = useState('')
 
-  // Sprint 1 only shows the confirmation. The back-end will send the real email.
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault()
-    setSent(true)
+    setError('')
+
+    try {
+      await forgotPassword(email)
+      setSent(true)
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   if (sent) {
@@ -61,6 +69,11 @@ export default function ForgotPassword() {
           autoComplete="email"
           required
         />
+        {error && (
+          <p className="text-sm text-negative" role="alert">
+            {error}
+          </p>
+        )}
         <div className="pt-2">
           <Button type="submit">Send reset link</Button>
         </div>
