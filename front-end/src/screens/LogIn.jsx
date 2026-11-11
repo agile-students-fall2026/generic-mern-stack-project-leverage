@@ -4,18 +4,27 @@ import Button from '../components/ui/Button.jsx'
 import ScreenTitle from '../components/ui/ScreenTitle.jsx'
 import TextField from '../components/ui/TextField.jsx'
 import RoleChoice from '../components/RoleChoice.jsx'
+import { logIn } from '../data/api.js'
 
 export default function LogIn() {
   const navigate = useNavigate()
   const [role, setRole] = useState('renter')
   const [form, setForm] = useState({ email: '', password: '' })
+  const [error, setError] = useState('')
 
   const updateField = event =>
     setForm({ ...form, [event.target.name]: event.target.value })
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault()
-    navigate(role === 'landlord' ? '/landlord' : '/')
+    setError('')
+
+    try {
+      const user = await logIn(form)
+      navigate(user.role === 'landlord' ? '/landlord' : '/')
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   return (
@@ -55,6 +64,11 @@ export default function LogIn() {
             Forgot password?
           </Link>
         </div>
+        {error && (
+          <p className="text-sm text-negative" role="alert">
+            {error}
+          </p>
+        )}
         <div className="pt-2">
           <Button type="submit">Log in</Button>
         </div>
