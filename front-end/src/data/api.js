@@ -4,6 +4,27 @@ const MOCK_BASE = '/mock'
 // Keep the demo links saved in this browser.
 const shareLinksStorageKey = 'leverage-share-links'
 
+const SERVER_HOSTNAME = import.meta.env.VITE_SERVER_HOSTNAME
+
+// Calls the Express back-end. Pass { method: 'POST', body: {...} } to send data.
+export async function request(path, options = {}) {
+  const settings = { method: options.method || 'GET' }
+
+  if (options.body) {
+    settings.headers = { 'Content-Type': 'application/json' }
+    settings.body = JSON.stringify(options.body)
+  }
+
+  const response = await fetch(`${SERVER_HOSTNAME}${path}`, settings)
+  const data = await response.json().catch(() => ({}))
+
+  if (!response.ok) {
+    throw new Error(data.error || `Request to ${path} failed`)
+  }
+
+  return data
+}
+
 async function load(fileName) {
   const response = await fetch(`${MOCK_BASE}/${fileName}`)
   if (!response.ok) {
