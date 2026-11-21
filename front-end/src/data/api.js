@@ -1,8 +1,7 @@
 // Every screen loads its data through these functions. Nothing is hard-coded in components.
 // In Sprint 2 we point MOCK_BASE at the Express back-end and the screens do not change.
 const MOCK_BASE = '/mock'
-// Keep the demo links saved in this browser.
-const shareLinksStorageKey = 'leverage-share-links'
+
 
 const SERVER_HOSTNAME = import.meta.env.VITE_SERVER_HOSTNAME
 
@@ -97,20 +96,15 @@ export function saveReportSections(sections) {
   })
 }
 
-export async function getShareLinks() {
-  const savedLinks = window.localStorage.getItem(shareLinksStorageKey)
-
-  if (savedLinks) {
-    return JSON.parse(savedLinks)
-  }
-
-  const mockLinks = await load('share-links.json')
-  window.localStorage.setItem(shareLinksStorageKey, JSON.stringify(mockLinks))
-  return mockLinks
+export function getShareLinks() {
+  return request('/share-links')
 }
 
-export function saveShareLinks(links) {
-  window.localStorage.setItem(shareLinksStorageKey, JSON.stringify(links))
+export function updateShareLink(linkId, changes) {
+  return request(`/share-links/${linkId}`, {
+    method: 'POST',
+    body: changes,
+  })
 }
 
 export function addShareLink(newLink) {
