@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import ScreenTitle from '../components/ui/ScreenTitle.jsx'
 import Toggle from '../components/ui/Toggle.jsx'
 import { formatDate } from '../data/format.js'
-import { getShareLinks, saveShareLinks } from '../data/api.js'
+import { getShareLinks, updateShareLink } from '../data/api.js'
 
 export default function ActiveShareLinks() {
   const [links, setLinks] = useState([])
@@ -13,24 +13,38 @@ export default function ActiveShareLinks() {
   }, [])
 
   // Save changes to the links in this browser.
-  const updateLinks = updatedLinks => {
-    setLinks(updatedLinks)
-    saveShareLinks(updatedLinks)
-  }
-
-  // Update a link when its switch changes.
-  const setLinkActive = (linkId, active) => {
-    updateLinks(
-      links.map(link => (link.id === linkId ? { ...link, active } : link)),
+const setLinkActive = async (linkId, active) => {
+  try {
+    const updatedLink = await updateShareLink(linkId, { active })
+    setLinks(currentLinks =>
+      currentLinks.map(link => (link.id === linkId ? updatedLink : link)),
     )
+  } catch (error) {
+    console.error('Could not update share link:', error)
   }
+}
 
-  // Save the name as it is edited.
-  const setLinkName = (linkId, sharedWith) => {
-    updateLinks(
-      links.map(link => (link.id === linkId ? { ...link, sharedWith } : link)),
+const setLinkName = (linkId, sharedWith) => {
+  setLinks(currentLinks =>
+    currentLinks.map(link =>
+      link.id === linkId ? { ...link, sharedWith } : link,
+    ),
+  )
+}
+
+const saveLinkName = async (linkId, sharedWith) => {
+  const name = sharedWith.trim()
+  if (!name) return
+
+  try {
+    const updatedLink = await updateShareLink(linkId, { sharedWith: name })
+    setLinks(currentLinks =>
+      currentLinks.map(link => (link.id === linkId ? updatedLink : link)),
     )
+  } catch (error) {
+    console.error('Could not update share link:', error)
   }
+}
 
   // Count the links that are currently on.
   const activeCount = links.filter(link => link.active).length
@@ -59,6 +73,7 @@ export default function ActiveShareLinks() {
                   type="text"
                   value={link.sharedWith ?? ''}
                   onChange={event => setLinkName(link.id, event.target.value)}
+                  onBlur={() => saveLinkName(link.id, link.sharedWith ?? '')}
                   placeholder="Name this link"
                   aria-label={`Name for share link ${link.url}`}
                   className={`mb-1 w-full border-b border-line bg-transparent pb-1 font-semibold outline-none focus:border-accent ${
