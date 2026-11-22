@@ -126,7 +126,7 @@ export function markNotificationsRead(notificationId) {
 }
 
 export function getProfile() {
-  return load('profile.json')
+  return request('/profile')
 }
 
 export function getReceivedReports() {
@@ -167,4 +167,8 @@ export function getOutcome(checkId) {
 
 export function saveOutcome(checkId, outcome) {
   return request(`/outcomes/${checkId}`, { method: 'POST', body: outcome })
+}
+
+export function saveProfile(profile) {
+  return request('/profile', { method: 'POST', body: profile })
 }

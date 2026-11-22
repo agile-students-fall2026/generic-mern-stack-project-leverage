@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react'
 import Button from '../components/ui/Button.jsx'
 import ScreenTitle from '../components/ui/ScreenTitle.jsx'
 import TextField from '../components/ui/TextField.jsx'
-import { getMyProfile, saveMyProfile } from '../data/profile.js'
+import { getProfile, saveProfile } from '../data/api.js'
 
 export default function Profile() {
   const [form, setForm] = useState(null)
   const [saved, setSaved] = useState(false)
+  const [error, setError] = useState('')
 
   useEffect(() => {
-    getMyProfile().then(setForm)
+      getProfile().then(setForm)
   }, [])
 
   const updateField = event => {
@@ -17,10 +18,16 @@ export default function Profile() {
     setSaved(false)
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault()
-    saveMyProfile(form)
-    setSaved(true)
+    setError('')
+
+    try {
+      await saveProfile(form)
+      setSaved(true)
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   if (!form) {
@@ -56,6 +63,11 @@ export default function Profile() {
           value={form.city}
           onChange={updateField}
         />
+        {error && (
+          <p className="text-sm text-negative" role="alert">
+            {error}
+          </p>
+        )}
         <div className="pt-2">
           <Button type="submit">{saved ? 'Saved' : 'Save changes'}</Button>
         </div>
