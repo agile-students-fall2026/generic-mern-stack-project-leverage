@@ -121,9 +121,8 @@ export function getProfile() {
   return load('profile.json')
 }
 
-export async function getReceivedReports() {
-  const reports = await load('received-reports.json')
-  return [...reports].sort((a, b) => b.sharedOn.localeCompare(a.sharedOn))
+export function getReceivedReports() {
+  return request('/landlord/reports')
 }
 
 export async function getSharedReport(reportId) {
