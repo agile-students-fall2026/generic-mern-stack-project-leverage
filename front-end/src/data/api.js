@@ -117,6 +117,14 @@ export function getNotifications() {
   return request('/notifications')
 }
 
+// marks one notification as read, or all of them when no id is given
+export function markNotificationsRead(notificationId) {
+  return request('/notifications/read', {
+    method: 'POST',
+    body: { id: notificationId },
+  })
+}
+
 export function getProfile() {
   return load('profile.json')
 }

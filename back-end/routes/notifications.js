@@ -16,4 +16,27 @@ router.get('/', (req, res) => {
   res.json(sortedNotifications)
 })
 
+// marks one notification as read, or all of them when no id is sent
+// this is kept in memory until the server restarts, the database comes in Sprint 3
+router.post('/read', (req, res) => {
+  let notificationId = null
+  if (req.body) {
+    notificationId = req.body.id
+  }
+
+  if (notificationId) {
+    const notification = notifications.find(item => item.id === notificationId)
+    if (!notification) {
+      return res.status(404).json({ error: 'Notification not found.' })
+    }
+    notification.read = true
+  } else {
+    for (const notification of notifications) {
+      notification.read = true
+    }
+  }
+
+  res.json({ success: true })
+})
+
 export default router
