@@ -10,6 +10,7 @@ import bankConnectionRouter from './routes/bankConnection.js'
 import reportRouter from './routes/report.js'
 import shareLinksRouter from './routes/shareLinks.js'
 import notificationsRouter from './routes/notifications.js'
+import sharedReportsRouter from './routes/sharedReports.js'
 const app = express()
 
 // log requests, but not during tests
@@ -31,5 +32,6 @@ app.use('/bank-connection', bankConnectionRouter)
 app.use('/report', reportRouter)
 app.use('/share-links', shareLinksRouter)
 app.use('/notifications', notificationsRouter)
+app.use('/shared-reports', sharedReportsRouter)
 
 export default app
