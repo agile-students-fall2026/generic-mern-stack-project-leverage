@@ -126,8 +126,11 @@ export function getReceivedReports() {
 }
 
 export async function getSharedReport(reportId) {
-  const reports = await load('shared-reports.json')
-  return reports.find(report => report.id === reportId)
+  try {
+    return await request(`/shared-reports/${reportId}`)
+  } catch {
+    return null
+  }
 }
 
 export function signUp(account) {
