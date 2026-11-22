@@ -2,7 +2,6 @@
 // In Sprint 2 we point MOCK_BASE at the Express back-end and the screens do not change.
 const MOCK_BASE = '/mock'
 
-
 const SERVER_HOSTNAME = import.meta.env.VITE_SERVER_HOSTNAME
 
 // Calls the Express back-end. Pass { method: 'POST', body: {...} } to send data.
@@ -114,11 +113,8 @@ export function addShareLink(newLink) {
   })
 }
 
-export async function getNotifications() {
-  const notifications = await load('notifications.json')
-  return [...notifications].sort((a, b) =>
-    b.createdAt.localeCompare(a.createdAt),
-  )
+export function getNotifications() {
+  return request('/notifications')
 }
 
 export function getProfile() {
