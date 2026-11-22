@@ -10,6 +10,8 @@ import bankConnectionRouter from './routes/bankConnection.js'
 import reportRouter from './routes/report.js'
 import shareLinksRouter from './routes/shareLinks.js'
 import notificationsRouter from './routes/notifications.js'
+import sharedReportsRouter from './routes/sharedReports.js'
+import profileRouter from './routes/profile.js'
 const app = express()
 
 // log requests, but not during tests
@@ -17,6 +19,7 @@ app.use(morgan('dev', { skip: (req, res) => process.env.NODE_ENV === 'test' }))
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use('/static', express.static('public'))
 
 app.get('/', (req, res) => {
   res.send('Leverage back-end is running')
@@ -31,5 +34,7 @@ app.use('/bank-connection', bankConnectionRouter)
 app.use('/report', reportRouter)
 app.use('/share-links', shareLinksRouter)
 app.use('/notifications', notificationsRouter)
+app.use('/shared-reports', sharedReportsRouter)
+app.use('/profile', profileRouter)
 
 export default app
