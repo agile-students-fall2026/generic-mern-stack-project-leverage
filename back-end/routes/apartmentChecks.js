@@ -25,6 +25,13 @@ function findArea(address) {
   }
   return null
 }
+// true only for a whole number between lowest and highest, like the choices on the form
+function isWholeNumberBetween(value, lowest, highest) {
+  if (!Number.isInteger(value)) {
+    return false
+  }
+  return value >= lowest && value <= highest
+}
 const router = express.Router()
 
 // all checks, newest first
@@ -57,7 +64,17 @@ router.post('/', (req, res) => {
       .status(400)
       .json({ error: 'Please enter the address and the asking rent.' })
   }
-
+  // bedrooms 0 (studio) to 4 (4+), bathrooms 1 to 3 (3+), the same choices as the form
+  const bedrooms = req.body.bedrooms
+  const bathrooms = req.body.bathrooms
+  if (
+    !isWholeNumberBetween(bedrooms, 0, 4) ||
+    !isWholeNumberBetween(bathrooms, 1, 3)
+  ) {
+    return res
+      .status(400)
+      .json({ error: 'Please choose the number of bedrooms and bathrooms.' })
+  }
   const area = findArea(address)
   if (!area) {
     return res.status(400).json({
@@ -76,8 +93,8 @@ router.post('/', (req, res) => {
     address: address,
     areaId: area.id,
     askingRent: askingRent,
-    bedrooms: req.body.bedrooms,
-    bathrooms: req.body.bathrooms,
+    bedrooms: bedrooms,
+    bathrooms: bathrooms,
     rangeLow: Math.round(localAverage * 0.95),
     rangeHigh: Math.round(localAverage * 1.05),
     localAverage: localAverage,
