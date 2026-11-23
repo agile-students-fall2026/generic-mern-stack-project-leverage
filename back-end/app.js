@@ -5,6 +5,7 @@ import authRouter from './routes/auth.js'
 import landlordRouter from './routes/landlord.js'
 import apartmentChecksRouter from './routes/apartmentChecks.js'
 import rentTrendsRouter from './routes/rentTrends.js'
+import negotiationMessageRouter from './routes/negotiationMessage.js'
 import outcomesRouter from './routes/outcomes.js'
 import bankConnectionRouter from './routes/bankConnection.js'
 import reportRouter from './routes/report.js'
@@ -30,6 +31,7 @@ app.use('/auth', authRouter)
 app.use('/landlord', landlordRouter)
 app.use('/apartment-checks', apartmentChecksRouter)
 app.use('/rent-trends', rentTrendsRouter)
+app.use('/negotiation-message', negotiationMessageRouter)
 app.use('/outcomes', outcomesRouter)
 app.use('/bank-connection', bankConnectionRouter)
 app.use('/report', reportRouter)
