@@ -91,9 +91,13 @@ export function createApartmentCheck(apartment) {
   return request('/apartment-checks', { method: 'POST', body: apartment })
 }
 
+// apartments near a check with the same bedrooms and bathrooms, or an empty list for an unknown check
 export async function getComparables(checkId) {
-  const comparables = await load('comparables.json')
-  return comparables.filter(comparable => comparable.checkId === checkId)
+  try {
+    return await request(`/comparables/${checkId}`)
+  } catch {
+    return []
+  }
 }
 
 export function getReport() {
