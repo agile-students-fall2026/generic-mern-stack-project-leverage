@@ -1,38 +1,18 @@
-import { getFollowedAreas } from './api.js'
+import { getFollowedAreas, request } from './api.js'
 
-// Followed areas are kept in this browser, the same way share links are in api.js.
-// The first time, they start from the mock data. In Sprint 2 this moves to the back-end.
-const followedAreasStorageKey = 'leverage-followed-areas'
-
-function saveFollowedIds(ids) {
-  window.localStorage.setItem(followedAreasStorageKey, JSON.stringify(ids))
-}
-
-async function getFollowedIds() {
-  const savedIds = window.localStorage.getItem(followedAreasStorageKey)
-
-  if (savedIds) {
-    return JSON.parse(savedIds)
-  }
-
-  const mockAreas = await getFollowedAreas()
-  const ids = mockAreas.map(area => area.id)
-  saveFollowedIds(ids)
-  return ids
-}
+// Followed areas are kept on the back-end, so following an area shows up on every screen.
 
 export async function isFollowingArea(areaId) {
-  const ids = await getFollowedIds()
-  return ids.includes(areaId)
+  const followedAreas = await getFollowedAreas()
+  return followedAreas.some(area => area.id === areaId)
 }
 
-export async function setFollowingArea(areaId, following) {
-  const ids = await getFollowedIds()
-  const updatedIds = following
-    ? [...ids.filter(id => id !== areaId), areaId]
-    : ids.filter(id => id !== areaId)
-  saveFollowedIds(updatedIds)
-  return updatedIds
+// follow (true) or unfollow (false) an area, the back-end replies with { areaId, following }
+export function setFollowingArea(areaId, following) {
+  return request('/followed-areas', {
+    method: 'POST',
+    body: { areaId, following },
+  })
 }
 
 // the Followed areas screen gets its list from the back-end
