@@ -12,6 +12,7 @@ import shareLinksRouter from './routes/shareLinks.js'
 import notificationsRouter from './routes/notifications.js'
 import sharedReportsRouter from './routes/sharedReports.js'
 import profileRouter from './routes/profile.js'
+import comparablesRouter from './routes/comparables.js'
 const app = express()
 
 // log requests, but not during tests
@@ -36,5 +37,6 @@ app.use('/share-links', shareLinksRouter)
 app.use('/notifications', notificationsRouter)
 app.use('/shared-reports', sharedReportsRouter)
 app.use('/profile', profileRouter)
+app.use('/comparables', comparablesRouter)
 
 export default app
