@@ -8,14 +8,14 @@ For renters in expensive cities, especially students, recent graduates and inter
 
 ## Team
 
-| Name    | GitHub |
-| ------- | ------ |
+| Name    | GitHub                                                   |
+| ------- | -------------------------------------------------------- |
 | Hamza   | [@muhammadhamza206](https://github.com/muhammadhamza206) |
-| Kashish | [@kashu0604](https://github.com/kashu0604) |
-| Izen    | [@izzennn](https://github.com/izzennn) |
-| Noor    | [@noor-kh](https://github.com/noor-kh) |
-| Rania   | [@raniaaamer999](https://github.com/raniaaamer999) |
-| Hashim  | [@Motabagani](https://github.com/Motabagani) |
+| Kashish | [@kashu0604](https://github.com/kashu0604)               |
+| Izen    | [@izzennn](https://github.com/izzennn)                   |
+| Noor    | [@noor-kh](https://github.com/noor-kh)                   |
+| Rania   | [@raniaaamer999](https://github.com/raniaaamer999)       |
+| Hashim  | [@Motabagani](https://github.com/Motabagani)             |
 
 ## How the project came to be
 
@@ -37,10 +37,10 @@ Our main users are renters in expensive cities.
 
 This especially includes:
 
-* International students and recent immigrants with limited US credit history
-* Students and recent graduates renting for the first time
-* Long-term renters dealing with a rent increase or renewal
-* Anyone who wants to know whether an apartment is fairly priced
+- International students and recent immigrants with limited US credit history
+- Students and recent graduates renting for the first time
+- Long-term renters dealing with a rent increase or renewal
+- Anyone who wants to know whether an apartment is fairly priced
 
 These are real users that we can reach through our own university community, friends, and other renters. We can also talk to housing offices and tenant organizations to better understand the problems renters face.
 
@@ -68,10 +68,10 @@ Renters can connect their bank account or upload statements to verify their rent
 
 Leverage creates a simple report showing information such as:
 
-* Number of months of verified rent payments
-* On-time payment history
-* Income stability
-* Rent compared to income
+- Number of months of verified rent payments
+- On-time payment history
+- Income stability
+- Rent compared to income
 
 The renter controls what they share. A landlord sees the summary and verification, not the renter's private transactions.
 
@@ -99,13 +99,13 @@ The first version focuses on NYC instead of trying to support every location. We
 
 The main parts of the project are:
 
-* A mobile interface for checking apartments
-* Collecting and organizing rental and neighborhood data
-* Comparing apartments with nearby rentals
-* Creating a Reliability Report
-* Allowing renters to privately share their report
-* A negotiation flow for applications and rent increases
-* A way for users to track changes in an area
+- A mobile interface for checking apartments
+- Collecting and organizing rental and neighborhood data
+- Comparing apartments with nearby rentals
+- Creating a Reliability Report
+- Allowing renters to privately share their report
+- A negotiation flow for applications and rent increases
+- A way for users to track changes in an area
 
 We are not building apartment listings, payment processing, a native mobile app, or a nationwide system. These features could be considered in the future, but they are not necessary for the first version.
 
@@ -122,16 +122,41 @@ Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for our team norms, git workflo
 - [Node.js](https://nodejs.org/) 22.22 or newer (check with `node -v`)
 - [git](https://git-scm.com/)
 
-### Run the front-end locally
+### 1. Get the code
 
 ```bash
 git clone https://github.com/agile-students-fall2026/generic-mern-stack-project-leverage.git
-cd generic-mern-stack-project-leverage/front-end
+cd generic-mern-stack-project-leverage
+```
+
+### 2. Run the back-end
+
+In a terminal, from the repository root:
+
+```bash
+cd back-end
 npm install
 npm run dev
 ```
 
-Then open http://localhost:5173 in your browser. Leverage is a mobile web app, so it is best viewed at phone size (in Chrome: DevTools → Toggle device toolbar).
+The Express server starts on http://localhost:3000 and prints `Server running on port: 3000`. Leave this terminal running. Opening http://localhost:3000 in a browser shows `Leverage back-end is running`.
+
+### 3. Run the front-end
+
+In a second terminal, from the repository root:
+
+```bash
+cd front-end
+cp .env.example .env
+npm install
+npm run dev
+```
+
+On Windows, use `copy .env.example .env` instead of `cp .env.example .env`.
+
+The `.env` file tells the front-end where the back-end is running (`VITE_SERVER_HOSTNAME=http://localhost:3000`). It contains no passwords or keys. `.env` files are listed in `.gitignore`, so they are never committed.
+
+Then open http://localhost:5173 in your browser. Leverage is a mobile web app, so it is best viewed at phone size (in Chrome: DevTools → Toggle device toolbar). The back-end must be running for the app to load its data.
 
 Useful pages to start from:
 
@@ -140,10 +165,23 @@ Useful pages to start from:
 - A shared report opened from a link, without an account: http://localhost:5173/r/rpt-104
 - Forgot password: http://localhost:5173/forgot-password
 
-### Other commands (run inside `front-end/`)
+### Run the back-end tests
+
+Inside `back-end/`:
+
+- `npm test` runs the unit tests (mocha and chai)
+- `npm run coverage` runs the unit tests and shows how much of the back-end code they cover (c8)
+
+### Other commands
+
+Inside `front-end/`:
 
 - `npm run lint` checks the code for problems
 - `npm run build` makes a production build in `front-end/dist/`
+
+Inside `back-end/`:
+
+- `npm start` runs the server without restarting it when files change
 
 ### Code style
 
@@ -155,17 +193,18 @@ To set up Visual Studio Code:
 2. Open Settings, search for **Format on Save** and turn it on.
 3. Set **Prettier - Code formatter** as the default formatter (search Settings for **Default Formatter**).
 
-Before opening a pull request, run `npm run lint` inside `front-end/` and fix any problems it reports.
+Before opening a pull request, run `npm run lint` and `npm run build` inside `front-end/` and `npm test` inside `back-end/`, and fix any problems they report.
 
 ### Data
 
-During Sprint 1 the app uses mock data from `front-end/public/mock/`, loaded through `front-end/src/data/api.js`. No `.env` file or account is needed to run it. The back-end in `back-end/` will replace the mock data in Sprint 2.
+All of the app's data comes from the Express back-end in `back-end/`. Its routes return mock JSON from the files in `back-end/data/`, and the front-end loads everything through `front-end/src/data/api.js`. No account is needed to run the app.
 
-Share links, followed areas, negotiation outcomes and the bank connection are saved in your browser. To start fresh, clear the site's local storage (DevTools → Application → Local storage).
+Forms send their data to the back-end, but nothing is stored permanently yet. A database will be added in Sprint 3, so any changes are lost when the back-end restarts.
+
+Static files are served from `back-end/public/` at http://localhost:3000/static/ (for example, http://localhost:3000/static/about.txt).
 
 ## Additional documents
 
-* [UX-DESIGN.md](./UX-DESIGN.md): app map, wireframes and clickable prototype
-* [CONTRIBUTING.md](./CONTRIBUTING.md): how to contribute to this project
-* [Project board](https://github.com/orgs/agile-students-fall2026/projects/69): Product Backlog, Sprint Backlogs and Task Boards
-
+- [UX-DESIGN.md](./UX-DESIGN.md): app map, wireframes and clickable prototype
+- [CONTRIBUTING.md](./CONTRIBUTING.md): how to contribute to this project
+- [Project board](https://github.com/orgs/agile-students-fall2026/projects/69): Product Backlog, Sprint Backlogs and Task Boards
