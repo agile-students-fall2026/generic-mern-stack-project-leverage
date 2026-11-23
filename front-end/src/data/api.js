@@ -31,13 +31,25 @@ async function load(fileName) {
   return response.json()
 }
 
-export function getAreas() {
-  return load('areas.json')
+// search and popular are optional, e.g. getAreas({ popular: true }) or getAreas({ search: 'astoria' })
+export function getAreas({ search, popular } = {}) {
+  const params = new URLSearchParams()
+  if (search) {
+    params.set('search', search)
+  }
+  if (popular) {
+    params.set('popular', 'true')
+  }
+  const query = params.toString()
+  return request(query ? `/areas?${query}` : '/areas')
 }
 
 export async function getArea(areaId) {
-  const areas = await getAreas()
-  return areas.find(area => area.id === areaId)
+  try {
+    return await request(`/areas/${areaId}`)
+  } catch {
+    return null
+  }
 }
 
 export async function getRentTrend(areaId) {
