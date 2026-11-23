@@ -172,3 +172,6 @@ export function saveOutcome(checkId, outcome) {
 export function saveProfile(profile) {
   return request('/profile', { method: 'POST', body: profile })
 }
+export function draftNegotiationMessage(form) {
+  return request('/negotiation-message', { method: 'POST', body: form })
+}

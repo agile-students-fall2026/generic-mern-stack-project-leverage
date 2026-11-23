@@ -5,6 +5,7 @@ import authRouter from './routes/auth.js'
 import landlordRouter from './routes/landlord.js'
 import apartmentChecksRouter from './routes/apartmentChecks.js'
 import rentTrendsRouter from './routes/rentTrends.js'
+import negotiationMessageRouter from './routes/negotiationMessage.js'
 import outcomesRouter from './routes/outcomes.js'
 import bankConnectionRouter from './routes/bankConnection.js'
 import reportRouter from './routes/report.js'
@@ -12,6 +13,7 @@ import shareLinksRouter from './routes/shareLinks.js'
 import notificationsRouter from './routes/notifications.js'
 import sharedReportsRouter from './routes/sharedReports.js'
 import profileRouter from './routes/profile.js'
+import followedAreasRouter from './routes/followedAreas.js'
 import areasRouter from './routes/areas.js'
 const app = express()
 
@@ -30,6 +32,7 @@ app.use('/auth', authRouter)
 app.use('/landlord', landlordRouter)
 app.use('/apartment-checks', apartmentChecksRouter)
 app.use('/rent-trends', rentTrendsRouter)
+app.use('/negotiation-message', negotiationMessageRouter)
 app.use('/outcomes', outcomesRouter)
 app.use('/bank-connection', bankConnectionRouter)
 app.use('/report', reportRouter)
@@ -37,6 +40,7 @@ app.use('/share-links', shareLinksRouter)
 app.use('/notifications', notificationsRouter)
 app.use('/shared-reports', sharedReportsRouter)
 app.use('/profile', profileRouter)
+app.use('/followed-areas', followedAreasRouter)
 app.use('/areas', areasRouter)
 
 export default app

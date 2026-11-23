@@ -7,79 +7,13 @@ import SectionTitle from '../components/ui/SectionTitle.jsx'
 import TextField from '../components/ui/TextField.jsx'
 import Toggle from '../components/ui/Toggle.jsx'
 import {
+  draftNegotiationMessage,
   getApartmentCheck,
-  getArea,
   getComparables,
-  getProfile,
   getReport,
 } from '../data/api.js'
 import { isBankConnected } from '../data/bankConnection.js'
 import { formatRent } from '../data/format.js'
-
-function roundToNearest25(amount) {
-  return Math.round(amount / 25) * 25
-}
-
-// Builds the suggested message from the renter's numbers. The renter can edit it before copying.
-function draftMessage({
-  check,
-  areaName,
-  comparableCount,
-  currentRent,
-  proposedRent,
-  report,
-  firstName,
-}) {
-  const isRenewal = currentRent > 0
-  const percent = Math.round(
-    ((proposedRent - check.localAverage) / check.localAverage) * 100,
-  )
-
-  let comparison = 'right at the local average'
-  if (percent > 0) {
-    comparison = `about ${percent}% above the local average`
-  } else if (percent < 0) {
-    comparison = `about ${Math.abs(percent)}% below the local average`
-  }
-
-  const opening = isRenewal
-    ? `Thank you for sending the renewal terms for ${check.address}. Before I sign, I looked at what similar apartments nearby rent for.`
-    : `Thank you for showing me ${check.address}. Before I apply, I looked at what similar apartments nearby rent for.`
-
-  const market = `${comparableCount} comparable ${check.bedrooms}-bedroom apartments in ${areaName} rent for between ${formatRent(check.rangeLow)} and ${formatRent(check.rangeHigh)}, and the local average is ${formatRent(check.localAverage)}.`
-
-  let rent = `At ${formatRent(proposedRent)}, the rent is ${comparison}.`
-  if (isRenewal) {
-    const increase = Math.round(
-      ((proposedRent - currentRent) / currentRent) * 100,
-    )
-    rent = `The proposed rent of ${formatRent(proposedRent)} is a ${increase}% increase from my current ${formatRent(currentRent)}, and puts it ${comparison}.`
-  }
-
-  const paragraphs = ['Hi,', opening, `${market} ${rent}`]
-
-  if (report) {
-    paragraphs.push(
-      `I've also paid rent on time ${report.onTimePayments} out of ${report.totalPayments} months, verified through Leverage, so you can count on me as a reliable tenant.`,
-    )
-  }
-
-  if (percent > 0) {
-    const target = roundToNearest25(
-      Math.max(check.localAverage, isRenewal ? currentRent : 0),
-    )
-    paragraphs.push(
-      `Would you consider ${formatRent(target)} a month? I'd be glad to sign at that rent.`,
-    )
-  } else {
-    paragraphs.push(
-      "The rent looks fair for the area, and I'd be glad to move forward.",
-    )
-  }
-
-  paragraphs.push(`Thank you,\n${firstName}`)
-  return paragraphs.join('\n\n')
-}
 
 export default function NegotiationMessage() {
   const { checkId } = useParams()
@@ -87,6 +21,7 @@ export default function NegotiationMessage() {
   const [currentRent, setCurrentRent] = useState('')
   const [proposedRent, setProposedRent] = useState('')
   const [includeReport, setIncludeReport] = useState(true)
+  const [suggestedMessage, setSuggestedMessage] = useState('')
   const [editedMessage, setEditedMessage] = useState(null)
   const [copyStatus, setCopyStatus] = useState('idle')
 
@@ -96,22 +31,39 @@ export default function NegotiationMessage() {
         setData(null)
         return
       }
-      const [area, comparables, report, profile] = await Promise.all([
-        getArea(check.areaId),
+      const [comparables, connected] = await Promise.all([
         getComparables(check.id),
-        isBankConnected() ? getReport() : null,
-        getProfile(),
+        isBankConnected().catch(() => false),
       ])
+      // only load the Reliability Report if the bank is connected
+      const report = connected ? await getReport() : null
       setProposedRent(String(check.askingRent))
-      setData({
-        check,
-        area,
-        comparables,
-        report,
-        firstName: profile.name.split(' ')[0],
-      })
+      setData({ check, comparables, report })
     })
   }, [checkId])
+
+  // ask the back-end to draft the message whenever the form changes
+  useEffect(() => {
+    if (!data || !(Number(proposedRent) > 0)) {
+      return
+    }
+    let ignore = false
+    draftNegotiationMessage({
+      checkId: data.check.id,
+      currentRent,
+      proposedRent,
+      includeReport: includeReport && data.report !== null,
+    })
+      .then(result => {
+        if (!ignore) setSuggestedMessage(result.message)
+      })
+      .catch(() => {
+        if (!ignore) setSuggestedMessage('')
+      })
+    return () => {
+      ignore = true
+    }
+  }, [data, currentRent, proposedRent, includeReport])
 
   if (data === undefined) {
     return <p className="text-sm text-muted">Loading…</p>
@@ -126,26 +78,13 @@ export default function NegotiationMessage() {
     )
   }
 
-  const { check, area, comparables, report, firstName } = data
+  const { check, comparables, report } = data
   const proposed = Number(proposedRent)
-  const current = Number(currentRent)
   const comparableAverage = Math.round(
     comparables.reduce((sum, item) => sum + item.rent, 0) / comparables.length,
   )
 
-  const suggestedMessage =
-    proposed > 0
-      ? draftMessage({
-          check,
-          areaName: area.name,
-          comparableCount: comparables.length,
-          currentRent: current,
-          proposedRent: proposed,
-          report: includeReport ? report : null,
-          firstName,
-        })
-      : ''
-  const message = editedMessage ?? suggestedMessage
+  const message = editedMessage ?? (proposed > 0 ? suggestedMessage : '')
 
   const changeInput = setter => event => {
     setter(event.target.value)
