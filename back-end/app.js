@@ -15,6 +15,7 @@ import sharedReportsRouter from './routes/sharedReports.js'
 import profileRouter from './routes/profile.js'
 import followedAreasRouter from './routes/followedAreas.js'
 import areasRouter from './routes/areas.js'
+import comparablesRouter from './routes/comparables.js'
 const app = express()
 
 // log requests, but not during tests
@@ -42,5 +43,6 @@ app.use('/shared-reports', sharedReportsRouter)
 app.use('/profile', profileRouter)
 app.use('/followed-areas', followedAreasRouter)
 app.use('/areas', areasRouter)
+app.use('/comparables', comparablesRouter)
 
 export default app
