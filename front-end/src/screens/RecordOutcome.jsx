@@ -110,7 +110,7 @@ export default function RecordOutcome() {
         title="What happened?"
         subtitle={
           savedOutcome
-            ? `${check.address} · Last updated ${formatDate(savedOutcome.updatedAt.slice(0, 10))}`
+            ? `${check.address} · Last updated ${formatDate(new Date(savedOutcome.updatedAt).toLocaleDateString('en-CA'))}`
             : check.address
         }
       />
