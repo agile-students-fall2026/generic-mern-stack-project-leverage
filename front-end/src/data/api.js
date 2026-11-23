@@ -1,6 +1,5 @@
 // Every screen loads its data through these functions. Nothing is hard-coded in components.
-// In Sprint 2 we point MOCK_BASE at the Express back-end and the screens do not change.
-const MOCK_BASE = '/mock'
+// They all call the Express back-end through request().
 
 const SERVER_HOSTNAME = import.meta.env.VITE_SERVER_HOSTNAME
 
@@ -21,14 +20,6 @@ export async function request(path, options = {}) {
   }
 
   return data
-}
-
-async function load(fileName) {
-  const response = await fetch(`${MOCK_BASE}/${fileName}`)
-  if (!response.ok) {
-    throw new Error(`Could not load ${fileName}`)
-  }
-  return response.json()
 }
 
 // search and popular are optional, e.g. getAreas({ popular: true }) or getAreas({ search: 'astoria' })
