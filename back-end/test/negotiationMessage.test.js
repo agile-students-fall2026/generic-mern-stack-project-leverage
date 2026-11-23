@@ -45,7 +45,36 @@ describe('negotiation message route', () => {
         expect(err).to.be.null
         expect(res).to.have.status(200)
         expect(res.body.message).to.include('renewal terms')
-        expect(res.body.message).to.include('6% increase')
+        expect(res.body.message).to.include('6% higher than my current')
+        done()
+      })
+  })
+
+  // A lower proposed rent on a renewal is described as lower.
+  it('POST /negotiation-message describes a lower renewal rent', done => {
+    request
+      .execute(app)
+      .post('/negotiation-message')
+      .send({ checkId: 'chk-3', currentRent: 2500, proposedRent: 2300 })
+      .end((err, res) => {
+        expect(err).to.be.null
+        expect(res).to.have.status(200)
+        expect(res.body.message).to.include('8% lower than my current')
+        expect(res.body.message).to.not.include('-8%')
+        done()
+      })
+  })
+
+  // The same rent on a renewal is described as the same.
+  it('POST /negotiation-message describes an unchanged renewal rent', done => {
+    request
+      .execute(app)
+      .post('/negotiation-message')
+      .send({ checkId: 'chk-3', currentRent: 2650, proposedRent: 2650 })
+      .end((err, res) => {
+        expect(err).to.be.null
+        expect(res).to.have.status(200)
+        expect(res.body.message).to.include('is the same as my current')
         done()
       })
   })
