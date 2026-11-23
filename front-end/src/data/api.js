@@ -60,12 +60,9 @@ export async function getRentTrend(areaId) {
   }
 }
 
-export async function getFollowedAreas() {
-  const [followedIds, areas] = await Promise.all([
-    load('followed-areas.json'),
-    getAreas(),
-  ])
-  return areas.filter(area => followedIds.includes(area.id))
+// the full area for each followed area, in the order they were followed
+export function getFollowedAreas() {
+  return request('/followed-areas')
 }
 
 export function getApartmentChecks() {

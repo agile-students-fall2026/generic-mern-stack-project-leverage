@@ -1,4 +1,4 @@
-import { getAreas, getFollowedAreas } from './api.js'
+import { getFollowedAreas } from './api.js'
 
 // Followed areas are kept in this browser, the same way share links are in api.js.
 // The first time, they start from the mock data. In Sprint 2 this moves to the back-end.
@@ -35,7 +35,7 @@ export async function setFollowingArea(areaId, following) {
   return updatedIds
 }
 
-export async function getMyFollowedAreas() {
-  const [ids, areas] = await Promise.all([getFollowedIds(), getAreas()])
-  return ids.map(id => areas.find(area => area.id === id)).filter(Boolean)
+// the Followed areas screen gets its list from the back-end
+export function getMyFollowedAreas() {
+  return getFollowedAreas()
 }
