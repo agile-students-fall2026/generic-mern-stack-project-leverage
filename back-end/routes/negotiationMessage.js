@@ -64,12 +64,19 @@ function draftMessage({
 
   let rent = `At ${formatRent(proposedRent)}, the rent is ${comparison}.`
   if (isRenewal) {
-    const increase = Math.round(
+    const change = Math.round(
       ((proposedRent - currentRent) / currentRent) * 100
     )
+    // compare the proposed rent with the current rent
+    let changeText = `${change}% higher than`
+    if (change < 0) {
+      changeText = `${Math.abs(change)}% lower than`
+    } else if (change === 0) {
+      changeText = 'the same as'
+    }
     rent = `The proposed rent of ${formatRent(
       proposedRent
-    )} is a ${increase}% increase from my current ${formatRent(
+    )} is ${changeText} my current ${formatRent(
       currentRent
     )}, and puts it ${comparison}.`
   }
