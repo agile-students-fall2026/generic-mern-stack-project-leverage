@@ -6,33 +6,31 @@ import SectionTitle from '../components/ui/SectionTitle.jsx'
 import { getAreas } from '../data/api.js'
 import { formatRent } from '../data/format.js'
 
-// Matches a typed area name, borough or ZIP code, and also a full address that mentions
-// the area or one of its ZIP codes, e.g. "31-18 30th Ave, Astoria" or "88 Wilson Ave, NY 11237".
-function matchesSearch(area, search) {
-  const text =
-    `${area.name} ${area.borough} ${area.zipCodes.join(' ')}`.toLowerCase()
-  if (text.includes(search)) {
-    return true
-  }
-  return (
-    search.includes(area.name.toLowerCase()) ||
-    area.zipCodes.some(zipCode => search.includes(zipCode))
-  )
-}
-
 export default function ExploreAreas() {
-  const [areas, setAreas] = useState([])
+  const [shownAreas, setShownAreas] = useState([])
   const [query, setQuery] = useState('')
 
-  useEffect(() => {
-    getAreas().then(setAreas)
-  }, [])
+  const search = query.trim()
 
-  const search = query.trim().toLowerCase()
-  const popularAreas = areas.filter(area => area.popular)
-  const shownAreas = search
-    ? areas.filter(area => matchesSearch(area, search))
-    : popularAreas
+  // with no search show the popular areas, otherwise ask the back-end to search
+  useEffect(() => {
+    let ignore = false
+    const options = search ? { search } : { popular: true }
+    getAreas(options)
+      .then(areas => {
+        if (!ignore) {
+          setShownAreas(areas)
+        }
+      })
+      .catch(() => {
+        if (!ignore) {
+          setShownAreas([])
+        }
+      })
+    return () => {
+      ignore = true
+    }
+  }, [search])
 
   return (
     <div>
