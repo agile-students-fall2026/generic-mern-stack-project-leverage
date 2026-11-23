@@ -2,7 +2,6 @@
 // In Sprint 2 we point MOCK_BASE at the Express back-end and the screens do not change.
 const MOCK_BASE = '/mock'
 
-
 const SERVER_HOSTNAME = import.meta.env.VITE_SERVER_HOSTNAME
 
 // Calls the Express back-end. Pass { method: 'POST', body: {...} } to send data.
@@ -126,25 +125,32 @@ export function addShareLink(newLink) {
   })
 }
 
-export async function getNotifications() {
-  const notifications = await load('notifications.json')
-  return [...notifications].sort((a, b) =>
-    b.createdAt.localeCompare(a.createdAt),
-  )
+export function getNotifications() {
+  return request('/notifications')
+}
+
+// marks one notification as read, or all of them when no id is given
+export function markNotificationsRead(notificationId) {
+  return request('/notifications/read', {
+    method: 'POST',
+    body: { id: notificationId },
+  })
 }
 
 export function getProfile() {
-  return load('profile.json')
+  return request('/profile')
 }
 
-export async function getReceivedReports() {
-  const reports = await load('received-reports.json')
-  return [...reports].sort((a, b) => b.sharedOn.localeCompare(a.sharedOn))
+export function getReceivedReports() {
+  return request('/landlord/reports')
 }
 
 export async function getSharedReport(reportId) {
-  const reports = await load('shared-reports.json')
-  return reports.find(report => report.id === reportId)
+  try {
+    return await request(`/shared-reports/${reportId}`)
+  } catch {
+    return null
+  }
 }
 
 export function signUp(account) {
@@ -173,4 +179,8 @@ export function getOutcome(checkId) {
 
 export function saveOutcome(checkId, outcome) {
   return request(`/outcomes/${checkId}`, { method: 'POST', body: outcome })
+}
+
+export function saveProfile(profile) {
+  return request('/profile', { method: 'POST', body: profile })
 }
