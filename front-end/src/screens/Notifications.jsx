@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import ScreenTitle from '../components/ui/ScreenTitle.jsx'
-import { getNotifications } from '../data/api.js'
+import { getNotifications, markNotificationsRead } from '../data/api.js'
 import { formatDate } from '../data/format.js'
 
 export default function Notifications() {
@@ -12,16 +12,14 @@ export default function Notifications() {
     getNotifications().then(setNotifications)
   }, [])
 
-  const openNotification = notification => {
-    setNotifications(
-      notifications.map(item =>
-        item.id === notification.id ? { ...item, read: true } : item,
-      ),
-    )
+  // save it as read on the back-end first, so it stays read when the renter comes back
+  const openNotification = async notification => {
+    await markNotificationsRead(notification.id)
     navigate(notification.link)
   }
 
-  const markAllRead = () => {
+  const markAllRead = async () => {
+    await markNotificationsRead()
     setNotifications(notifications.map(item => ({ ...item, read: true })))
   }
 
