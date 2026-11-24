@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Link, NavLink, Outlet } from 'react-router'
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router'
 import { logOut } from '../../data/api.js'
 
 const menuItems = {
@@ -22,15 +22,27 @@ const menuItems = {
 
 const homePaths = { renter: '/', landlord: '/landlord' }
 
-function BarRow({ homePath, buttonLabel, onButtonClick, dark }) {
+function BarRow({ homePath, buttonLabel, onButtonClick, dark, onBack }) {
   return (
     <div className="flex h-14 items-center justify-between px-5">
-      <Link
-        to={homePath}
-        className={`text-lg font-bold tracking-tight ${dark ? 'text-white' : 'text-ink'}`}
-      >
-        Leverage
-      </Link>
+      <div className="flex items-center gap-3">
+        {onBack && (
+          <button
+            type="button"
+            onClick={onBack}
+            aria-label="Go back"
+            className="text-lg font-semibold text-ink"
+          >
+            ←
+          </button>
+        )}
+        <Link
+          to={homePath}
+          className={`text-lg font-bold tracking-tight ${dark ? 'text-white' : 'text-ink'}`}
+        >
+          Leverage
+        </Link>
+      </div>
       <button
         type="button"
         onClick={onButtonClick}
@@ -45,6 +57,20 @@ function BarRow({ homePath, buttonLabel, onButtonClick, dark }) {
 export default function AppLayout({ role }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const closeMenu = useCallback(() => setMenuOpen(false), [])
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  // show the back button everywhere except the home screen
+  const isHome = location.pathname === homePaths[role]
+
+  // go to the previous screen, or home if the app was opened on this screen
+  function goBack() {
+    if (window.history.state && window.history.state.idx > 0) {
+      navigate(-1)
+    } else {
+      navigate(homePaths[role])
+    }
+  }
 
   // Let Escape close the menu while it is open.
   useEffect(() => {
@@ -67,6 +93,7 @@ export default function AppLayout({ role }) {
           homePath={homePaths[role]}
           buttonLabel="Menu"
           onButtonClick={() => setMenuOpen(true)}
+          onBack={isHome ? null : goBack}
         />
       </header>
 
