@@ -7,15 +7,12 @@ use(chaiHttp)
 describe('Auth routes', () => {
   describe('POST /auth/signup', () => {
     it('creates a new user and does not send back the password', async () => {
-      const res = await request
-        .execute(app)
-        .post('/auth/signup')
-        .send({
-          name: 'Test Renter',
-          email: 'test.renter@example.com',
-          password: 'password123',
-          role: 'renter',
-        })
+      const res = await request.execute(app).post('/auth/signup').send({
+        name: 'Test Renter',
+        email: 'test.renter@example.com',
+        password: 'password123',
+        role: 'renter',
+      })
 
       expect(res).to.have.status(201)
       expect(res).to.be.json
@@ -29,30 +26,24 @@ describe('Auth routes', () => {
     })
 
     it('accepts the landlord role', async () => {
-      const res = await request
-        .execute(app)
-        .post('/auth/signup')
-        .send({
-          name: 'Test Landlord',
-          email: 'test.landlord@example.com',
-          password: 'password123',
-          role: 'landlord',
-        })
+      const res = await request.execute(app).post('/auth/signup').send({
+        name: 'Test Landlord',
+        email: 'test.landlord@example.com',
+        password: 'password123',
+        role: 'landlord',
+      })
 
       expect(res).to.have.status(201)
       expect(res.body.role).to.equal('landlord')
     })
 
     it('rejects an email that is already used', async () => {
-      const res = await request
-        .execute(app)
-        .post('/auth/signup')
-        .send({
-          name: 'Someone',
-          email: 'maya.rahman@example.com',
-          password: 'password123',
-          role: 'renter',
-        })
+      const res = await request.execute(app).post('/auth/signup').send({
+        name: 'Someone',
+        email: 'maya.rahman@example.com',
+        password: 'password123',
+        role: 'renter',
+      })
 
       expect(res).to.have.status(400)
       expect(res).to.be.json
@@ -62,15 +53,12 @@ describe('Auth routes', () => {
     })
 
     it('rejects a password shorter than 8 characters', async () => {
-      const res = await request
-        .execute(app)
-        .post('/auth/signup')
-        .send({
-          name: 'Someone',
-          email: 'short@example.com',
-          password: 'abc',
-          role: 'renter',
-        })
+      const res = await request.execute(app).post('/auth/signup').send({
+        name: 'Someone',
+        email: 'short@example.com',
+        password: 'abc',
+        role: 'renter',
+      })
 
       expect(res).to.have.status(400)
       expect(res.body.error).to.equal(
@@ -79,15 +67,12 @@ describe('Auth routes', () => {
     })
 
     it('rejects a role that is not renter or landlord', async () => {
-      const res = await request
-        .execute(app)
-        .post('/auth/signup')
-        .send({
-          name: 'Someone',
-          email: 'admin@example.com',
-          password: 'password123',
-          role: 'admin',
-        })
+      const res = await request.execute(app).post('/auth/signup').send({
+        name: 'Someone',
+        email: 'admin@example.com',
+        password: 'password123',
+        role: 'admin',
+      })
 
       expect(res).to.have.status(400)
       expect(res.body.error).to.equal('Please choose renter or landlord.')

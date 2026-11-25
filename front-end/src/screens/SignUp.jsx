@@ -15,7 +15,7 @@ export default function SignUp() {
   const updateField = event =>
     setForm({ ...form, [event.target.name]: event.target.value })
 
-    const handleSubmit = async event => {
+  const handleSubmit = async event => {
     event.preventDefault()
     setError('')
 

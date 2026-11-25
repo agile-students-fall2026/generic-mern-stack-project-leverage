@@ -3,19 +3,19 @@ import fs from 'fs'
 
 // load the data the message is built from, once, when the server starts
 const apartmentChecks = JSON.parse(
-  fs.readFileSync(new URL('../data/apartment-checks.json', import.meta.url))
+  fs.readFileSync(new URL('../data/apartment-checks.json', import.meta.url)),
 )
 const areas = JSON.parse(
-  fs.readFileSync(new URL('../data/areas.json', import.meta.url))
+  fs.readFileSync(new URL('../data/areas.json', import.meta.url)),
 )
 const comparables = JSON.parse(
-  fs.readFileSync(new URL('../data/comparables.json', import.meta.url))
+  fs.readFileSync(new URL('../data/comparables.json', import.meta.url)),
 )
 const report = JSON.parse(
-  fs.readFileSync(new URL('../data/report.json', import.meta.url))
+  fs.readFileSync(new URL('../data/report.json', import.meta.url)),
 )
 const profile = JSON.parse(
-  fs.readFileSync(new URL('../data/profile.json', import.meta.url))
+  fs.readFileSync(new URL('../data/profile.json', import.meta.url)),
 )
 
 // same money format as formatRent in the front-end's format.js
@@ -40,7 +40,7 @@ function draftMessage({
 }) {
   const isRenewal = currentRent > 0
   const percent = Math.round(
-    ((proposedRent - check.localAverage) / check.localAverage) * 100
+    ((proposedRent - check.localAverage) / check.localAverage) * 100,
   )
 
   let comparison = 'right at the local average'
@@ -57,15 +57,15 @@ function draftMessage({
   const market = `${comparableCount} comparable ${
     check.bedrooms
   }-bedroom apartments in ${areaName} rent for between ${formatRent(
-    check.rangeLow
+    check.rangeLow,
   )} and ${formatRent(check.rangeHigh)}, and the local average is ${formatRent(
-    check.localAverage
+    check.localAverage,
   )}.`
 
   let rent = `At ${formatRent(proposedRent)}, the rent is ${comparison}.`
   if (isRenewal) {
     const change = Math.round(
-      ((proposedRent - currentRent) / currentRent) * 100
+      ((proposedRent - currentRent) / currentRent) * 100,
     )
     // compare the proposed rent with the current rent
     let changeText = `${change}% higher than`
@@ -75,9 +75,9 @@ function draftMessage({
       changeText = 'the same as'
     }
     rent = `The proposed rent of ${formatRent(
-      proposedRent
+      proposedRent,
     )} is ${changeText} my current ${formatRent(
-      currentRent
+      currentRent,
     )}, and puts it ${comparison}.`
   }
 
@@ -85,22 +85,22 @@ function draftMessage({
 
   if (report) {
     paragraphs.push(
-      `I've also paid rent on time ${report.onTimePayments} out of ${report.totalPayments} months, verified through Leverage, so you can count on me as a reliable tenant.`
+      `I've also paid rent on time ${report.onTimePayments} out of ${report.totalPayments} months, verified through Leverage, so you can count on me as a reliable tenant.`,
     )
   }
 
   if (percent > 0) {
     const target = roundToNearest25(
-      Math.max(check.localAverage, isRenewal ? currentRent : 0)
+      Math.max(check.localAverage, isRenewal ? currentRent : 0),
     )
     paragraphs.push(
       `Would you consider ${formatRent(
-        target
-      )} a month? I'd be glad to sign at that rent.`
+        target,
+      )} a month? I'd be glad to sign at that rent.`,
     )
   } else {
     paragraphs.push(
-      "The rent looks fair for the area, and I'd be glad to move forward."
+      "The rent looks fair for the area, and I'd be glad to move forward.",
     )
   }
 
@@ -126,7 +126,7 @@ router.post('/', (req, res) => {
 
   const area = areas.find(item => item.id === check.areaId)
   const comparableCount = comparables.filter(
-    item => item.checkId === check.id
+    item => item.checkId === check.id,
   ).length
 
   const message = draftMessage({

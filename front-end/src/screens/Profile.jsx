@@ -10,7 +10,7 @@ export default function Profile() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-      getProfile().then(setForm)
+    getProfile().then(setForm)
   }, [])
 
   const updateField = event => {

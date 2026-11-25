@@ -13,38 +13,38 @@ export default function ActiveShareLinks() {
   }, [])
 
   // Save changes to the links in this browser.
-const setLinkActive = async (linkId, active) => {
-  try {
-    const updatedLink = await updateShareLink(linkId, { active })
-    setLinks(currentLinks =>
-      currentLinks.map(link => (link.id === linkId ? updatedLink : link)),
-    )
-  } catch (error) {
-    console.error('Could not update share link:', error)
+  const setLinkActive = async (linkId, active) => {
+    try {
+      const updatedLink = await updateShareLink(linkId, { active })
+      setLinks(currentLinks =>
+        currentLinks.map(link => (link.id === linkId ? updatedLink : link)),
+      )
+    } catch (error) {
+      console.error('Could not update share link:', error)
+    }
   }
-}
 
-const setLinkName = (linkId, sharedWith) => {
-  setLinks(currentLinks =>
-    currentLinks.map(link =>
-      link.id === linkId ? { ...link, sharedWith } : link,
-    ),
-  )
-}
-
-const saveLinkName = async (linkId, sharedWith) => {
-  const name = sharedWith.trim()
-  if (!name) return
-
-  try {
-    const updatedLink = await updateShareLink(linkId, { sharedWith: name })
+  const setLinkName = (linkId, sharedWith) => {
     setLinks(currentLinks =>
-      currentLinks.map(link => (link.id === linkId ? updatedLink : link)),
+      currentLinks.map(link =>
+        link.id === linkId ? { ...link, sharedWith } : link,
+      ),
     )
-  } catch (error) {
-    console.error('Could not update share link:', error)
   }
-}
+
+  const saveLinkName = async (linkId, sharedWith) => {
+    const name = sharedWith.trim()
+    if (!name) return
+
+    try {
+      const updatedLink = await updateShareLink(linkId, { sharedWith: name })
+      setLinks(currentLinks =>
+        currentLinks.map(link => (link.id === linkId ? updatedLink : link)),
+      )
+    } catch (error) {
+      console.error('Could not update share link:', error)
+    }
+  }
 
   // Count the links that are currently on.
   const activeCount = links.filter(link => link.active).length

@@ -26,9 +26,7 @@ router.post('/', (req, res) => {
 
 // Rename a link or change whether it is active.
 router.post('/:linkId', (req, res) => {
-  const linkIndex = shareLinks.findIndex(
-    link => link.id === req.params.linkId,
-  )
+  const linkIndex = shareLinks.findIndex(link => link.id === req.params.linkId)
 
   if (linkIndex === -1) {
     return res.status(404).json({ error: 'Share link not found.' })
@@ -39,7 +37,9 @@ router.post('/:linkId', (req, res) => {
   const hasActive = typeof active !== 'undefined'
 
   if (!hasSharedWith && !hasActive) {
-    return res.status(400).json({ error: 'Provide a name or active status to update.' })
+    return res
+      .status(400)
+      .json({ error: 'Provide a name or active status to update.' })
   }
 
   if (hasSharedWith && (typeof sharedWith !== 'string' || !sharedWith.trim())) {
@@ -47,7 +47,9 @@ router.post('/:linkId', (req, res) => {
   }
 
   if (hasActive && typeof active !== 'boolean') {
-    return res.status(400).json({ error: 'Active status must be true or false.' })
+    return res
+      .status(400)
+      .json({ error: 'Active status must be true or false.' })
   }
 
   shareLinks[linkIndex] = {

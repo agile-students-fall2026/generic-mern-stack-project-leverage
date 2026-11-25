@@ -3,10 +3,10 @@ import fs from 'fs'
 
 // load the apartment checks and saved outcomes once, when the server starts
 const apartmentChecks = JSON.parse(
-  fs.readFileSync(new URL('../data/apartment-checks.json', import.meta.url))
+  fs.readFileSync(new URL('../data/apartment-checks.json', import.meta.url)),
 )
 const outcomes = JSON.parse(
-  fs.readFileSync(new URL('../data/outcomes.json', import.meta.url))
+  fs.readFileSync(new URL('../data/outcomes.json', import.meta.url)),
 )
 
 // the same choices as the Record outcome screen

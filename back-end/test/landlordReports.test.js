@@ -6,7 +6,8 @@ use(chaiHttp)
 
 describe('landlord reports route', () => {
   it('GET /landlord/reports returns the newest report first', done => {
-    request.execute(app)
+    request
+      .execute(app)
       .get('/landlord/reports')
       .end((err, res) => {
         expect(err).to.be.null
