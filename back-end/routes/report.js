@@ -17,7 +17,9 @@ router.post('/sections', (req, res) => {
   const { sections } = req.body
 
   if (!Array.isArray(sections)) {
-    return res.status(400).json({ error: 'Please provide the selected sections.' })
+    return res
+      .status(400)
+      .json({ error: 'Please provide the selected sections.' })
   }
 
   res.json({ sections })

@@ -16,7 +16,8 @@ const testLink = {
 describe('share links routes', () => {
   // The GET route should return the saved links as a list.
   it('GET /share-links returns a list', done => {
-    request.execute(app)
+    request
+      .execute(app)
       .get('/share-links')
       .end((err, res) => {
         expect(err).to.be.null
@@ -28,7 +29,8 @@ describe('share links routes', () => {
 
   // The POST route should add a new link and return it.
   it('POST /share-links creates a link', done => {
-    request.execute(app)
+    request
+      .execute(app)
       .post('/share-links')
       .send(testLink)
       .end((err, res) => {
@@ -41,7 +43,8 @@ describe('share links routes', () => {
 
   // The link update route should save a new name and active status.
   it('POST /share-links/:linkId renames and deactivates a link', done => {
-    request.execute(app)
+    request
+      .execute(app)
       .post(`/share-links/${testLink.id}`)
       .send({ sharedWith: 'Updated test name', active: false })
       .end((err, res) => {
@@ -55,7 +58,8 @@ describe('share links routes', () => {
 
   // Updating an ID that is not in the list should return 404.
   it('returns 404 when updating an unknown link', done => {
-    request.execute(app)
+    request
+      .execute(app)
       .post('/share-links/unknown-link')
       .send({ active: false })
       .end((err, res) => {

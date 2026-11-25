@@ -10,7 +10,6 @@ import { clearBankConnection, isBankConnected } from '../data/bankConnection.js'
 import { formatDate } from '../data/format.js'
 import { getReport, saveReportSections } from '../data/api.js'
 
-
 // Build the shareable sections from the report data.
 function buildSections(report) {
   return [
@@ -42,21 +41,21 @@ export default function ReliabilityReport() {
 
   // Load the report when the screen opens.
   useEffect(() => {
-  isBankConnected()
-    .then((connected) => {
-      setBankConnected(connected)
-      if (connected) return getReport().then(setReport)
-    })
-    .catch(() => setBankConnected(false))
-}, [])
+    isBankConnected()
+      .then(connected => {
+        setBankConnected(connected)
+        if (connected) return getReport().then(setReport)
+      })
+      .catch(() => setBankConnected(false))
+  }, [])
 
   if (bankConnected === null) {
-  return <p className="text-sm text-muted">Checking your bank connection…</p>
-}
+    return <p className="text-sm text-muted">Checking your bank connection…</p>
+  }
 
-if (!bankConnected) {
-  return <Navigate to="/connect-bank" replace />
-}
+  if (!bankConnected) {
+    return <Navigate to="/connect-bank" replace />
+  }
 
   // Wait until the report data is ready.
   if (!report) {
@@ -70,24 +69,24 @@ if (!bankConnected) {
 
   // Update the preview when a switch changes.
   const setSectionShown = (sectionId, shown) => {
-  const nextHiddenSections = shown
-    ? hiddenSections.filter(id => id !== sectionId)
-    : [...hiddenSections, sectionId]
+    const nextHiddenSections = shown
+      ? hiddenSections.filter(id => id !== sectionId)
+      : [...hiddenSections, sectionId]
 
-  setHiddenSections(nextHiddenSections)
+    setHiddenSections(nextHiddenSections)
 
-  const selectedSections = sections
-    .filter(section => !nextHiddenSections.includes(section.id))
-    .map(section => section.id)
+    const selectedSections = sections
+      .filter(section => !nextHiddenSections.includes(section.id))
+      .map(section => section.id)
 
-  saveReportSections(selectedSections)
-}
+    saveReportSections(selectedSections)
+  }
 
   // Clear the saved connection and return to Connect Bank.
   const handleDisconnect = async () => {
-  await clearBankConnection()
-  navigate('/connect-bank')
-}
+    await clearBankConnection()
+    navigate('/connect-bank')
+  }
 
   return (
     <div>

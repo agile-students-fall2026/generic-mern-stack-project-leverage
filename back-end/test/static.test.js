@@ -6,7 +6,8 @@ use(chaiHttp)
 
 describe('static route', () => {
   it('GET /static/about.txt sends the file', done => {
-    request.execute(app)
+    request
+      .execute(app)
       .get('/static/about.txt')
       .end((err, res) => {
         expect(err).to.be.null

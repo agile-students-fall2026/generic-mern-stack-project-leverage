@@ -3,7 +3,7 @@ import fs from 'fs'
 
 // load the rent trends once, when the server starts
 const rentTrends = JSON.parse(
-  fs.readFileSync(new URL('../data/rent-trends.json', import.meta.url))
+  fs.readFileSync(new URL('../data/rent-trends.json', import.meta.url)),
 )
 
 const router = express.Router()

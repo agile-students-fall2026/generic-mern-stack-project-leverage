@@ -6,7 +6,8 @@ use(chaiHttp)
 
 describe('shared reports route', () => {
   it('GET /shared-reports/rpt-104 returns that report', done => {
-    request.execute(app)
+    request
+      .execute(app)
       .get('/shared-reports/rpt-104')
       .end((err, res) => {
         expect(err).to.be.null
@@ -19,7 +20,8 @@ describe('shared reports route', () => {
   })
 
   it('GET /shared-reports with a wrong id returns 404', done => {
-    request.execute(app)
+    request
+      .execute(app)
       .get('/shared-reports/not-a-real-id')
       .end((err, res) => {
         expect(res).to.have.status(404)
